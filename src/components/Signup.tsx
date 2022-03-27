@@ -38,6 +38,36 @@ export default function Signup() {
     },
   ];
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  function Signup() {
+    var axios = require("axios");
+    var data = JSON.stringify({
+      name: name,
+      email: email,
+      password: password,
+    });
+
+    var config = {
+      method: "post",
+      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/signup",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response: any) {
+        alert(JSON.stringify(response.data));
+      })
+      .catch(function (error: any) {
+        alert(error);
+      });
+  }
+
   return (
     <div
       style={{
@@ -62,23 +92,6 @@ export default function Signup() {
           margin: 80,
         }}
       >
-        {step > 0 ? (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              width: "100%",
-              display: "contents",
-            }}
-          >
-            <MdChevronLeft
-              size={30}
-              color={"#00b0f0"}
-              style={{ cursor: "pointer" }}
-              onClick={() => setStep(step - 1)}
-            />
-          </div>
-        ) : null}
         {step === 0 ? (
           <>
             <div style={{ flex: 2, borderRight: "1px solid #EAEAEA" }} />
@@ -86,18 +99,34 @@ export default function Signup() {
               <h3>Sign up for DocDemand</h3>
               <label>
                 Full Name:
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={(evt) => setName(evt.currentTarget.value)}
+                />
               </label>
               <label>
                 Email:
-                <input type="text" />
+                <input
+                  type="text"
+                  onChange={(evt) => setEmail(evt.currentTarget.value)}
+                />
               </label>
               <label>
                 Password:
-                <input type="password" />
+                <input
+                  type="password"
+                  onChange={(evt) => setPassword(evt.currentTarget.value)}
+                />
               </label>
+              <p>
+                {name}, {email}, {password}
+              </p>
               <ButtonUnstyled
-                onClick={() => setStep(step + 1)}
+                // onClick={() => setStep(step + 1)}
+                onClick={() => {
+                  Signup();
+                  setStep(step + 1);
+                }}
                 style={{
                   margin: 12,
                   borderRadius: 4,

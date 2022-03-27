@@ -1,46 +1,36 @@
 import { ButtonUnstyled } from "@mui/base";
-import { MdCancel, MdChevronRight, MdDelete } from "react-icons/md";
+import { useEffect, useState } from "react";
+import {
+  MdAddCircle,
+  MdCancel,
+  MdChevronRight,
+  MdDelete,
+} from "react-icons/md";
+
+export type Hospital = { id: string; name: string; city: string };
 
 export default function AddHospital() {
-  const sampleData: {
-    healthSystemId: string;
-    name: string;
-    city: string;
-    active: boolean;
-  }[] = [
-    {
-      healthSystemId: "asdkdfj4dx",
-      name: "Wallaby Medical System",
-      city: "Chicago",
-      active: true,
-    },
-    {
-      healthSystemId: "dfewef0980",
-      name: "Parakeet Medical System",
-      city: "Chicago",
-      active: true,
-    },
-    {
-      healthSystemId: "asdfsd90980",
-      name: "Octopus Medical System",
-      city: "Chicago",
+  const [hospitals, setHospitals] = useState<Hospital[]>();
 
-      active: true,
-    },
-    {
-      healthSystemId: "asdkdfj4dx",
-      name: "Wallaby Medical System",
-      city: "Chicago",
+  var axios = require("axios");
 
-      active: true,
-    },
-    {
-      healthSystemId: "dfewef0980",
-      name: "Parakeet Medical System",
-      city: "Chicago",
-      active: true,
-    },
-  ];
+  //   var config = ;
+
+  useState(() =>
+    axios({
+      method: "get",
+      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/hospital",
+      headers: {},
+    })
+      .then(function (response: any) {
+        setHospitals(response.data);
+        // alert(JSON.stringify(response.data));
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      })
+  );
+
   return (
     <div
       style={{
@@ -51,37 +41,6 @@ export default function AddHospital() {
         paddingBottom: 300,
       }}
     >
-      <div style={{ flex: 1, padding: 24 }}>
-        <h3>Your Hospitals</h3>
-        {sampleData.map(function (item) {
-          return item.active === true ? (
-            <li
-              style={{
-                flex: 1,
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                padding: 4,
-                marginInline: 4,
-                justifyContent: "space-between",
-                borderBottom: "0.5px solid lightgray",
-              }}
-              key={item.healthSystemId}
-              onClick={() => alert("select hospital")}
-            >
-              <div>
-                <p style={{ fontWeight: "700", marginBottom: 0 }}>
-                  {item.name}
-                </p>
-                <p style={{ fontSize: 12, fontWeight: 500, marginTop: 0 }}>
-                  {item.city}
-                </p>
-              </div>
-              <MdCancel color={"red"} size={24} />
-            </li>
-          ) : null;
-        })}
-      </div>
       <div style={{ flex: 1, padding: 24 }}>
         <h3>Add Hospital</h3>
         <div style={{ flex: 1, display: "flex" }}>
@@ -114,34 +73,46 @@ export default function AddHospital() {
         </div>
         <div
           style={{
+            display: "flex",
+            flexDirection: "column",
             marginTop: 12,
             paddingInline: 12,
+            // borderBlock: "1px solid #1e1e1e",
+            flex: 1,
           }}
         >
-          {sampleData.map(function (item) {
-            return item.active === true ? (
-              <li
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  padding: 4,
-                  marginInline: 4,
-                  justifyContent: "space-between",
-                  borderBottom: "0.5px solid lightgray",
-                }}
-                key={item.healthSystemId}
-                onClick={() => alert("select hospital")}
-                // tabIndex={1}
-              >
-                <div>
-                  <p style={{ fontWeight: "500" }}>{item.name}</p>
-                </div>
-                <MdChevronRight />
-              </li>
-            ) : null;
-          })}
+          {hospitals === undefined
+            ? null
+            : hospitals.map(function (item: Hospital) {
+                return (
+                  <li
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      padding: 8,
+                      marginInline: 4,
+                      justifyContent: "space-between",
+                      borderTop: "0.5px solid lightgray",
+                    }}
+                    key={item.id}
+                    onClick={() => alert("select hospital")}
+                  >
+                    <div>
+                      <p style={{ fontWeight: "700", marginBottom: 0 }}>
+                        {item.name}
+                      </p>
+                      <p
+                        style={{ fontSize: 12, fontWeight: 500, marginTop: 0 }}
+                      >
+                        {item.city}
+                      </p>
+                    </div>
+                    <MdAddCircle color={"lightgreen"} size={24} />
+                  </li>
+                );
+              })}
         </div>
       </div>
     </div>
