@@ -1,6 +1,7 @@
 import { ButtonUnstyled } from "@mui/base";
 import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import doc1 from "../assets/doc1.png";
 
 export default function Login() {
   let navigate = useNavigate();
@@ -29,7 +30,17 @@ export default function Login() {
           margin: 80,
         }}
       >
-        <div style={{ flex: 2, borderRight: "1px solid #EAEAEA" }} />
+        <div
+          style={{
+            flex: 2,
+            borderRight: "1px solid #EAEAEA",
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          <img src={doc1} style={{ maxWidth: 260 }} />
+        </div>
         <div style={{ flex: 3, padding: 24 }}>
           <h3>Login to DocDemand</h3>
           <label>

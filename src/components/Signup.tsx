@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ButtonUnstyled } from "@mui/base";
 import { Link } from "@mui/material";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import doc1 from "../assets/doc1.png";
 
 export default function Signup() {
   const [step, setStep] = useState<number>(0);
@@ -94,7 +95,17 @@ export default function Signup() {
       >
         {step === 0 ? (
           <>
-            <div style={{ flex: 2, borderRight: "1px solid #EAEAEA" }} />
+            <div
+              style={{
+                flex: 2,
+                borderRight: "1px solid #EAEAEA",
+                alignItems: "center",
+                justifyContent: "center",
+                display: "flex",
+              }}
+            >
+              <img src={doc1} style={{ maxWidth: 260 }} />
+            </div>
             <div style={{ flex: 3, padding: 24 }}>
               <h3>Sign up for DocDemand</h3>
               <label>
@@ -118,9 +129,9 @@ export default function Signup() {
                   onChange={(evt) => setPassword(evt.currentTarget.value)}
                 />
               </label>
-              <p>
+              {/* <p>
                 {name}, {email}, {password}
-              </p>
+              </p> */}
               <ButtonUnstyled
                 // onClick={() => setStep(step + 1)}
                 onClick={() => {

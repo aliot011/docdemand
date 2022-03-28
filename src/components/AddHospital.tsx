@@ -7,10 +7,15 @@ import {
   MdDelete,
 } from "react-icons/md";
 
-export type Hospital = { id: string; name: string; city: string };
+export type hospital_id = {
+  id: string;
+  created_at: string;
+  name: string;
+  city: string;
+};
 
 export default function AddHospital() {
-  const [hospitals, setHospitals] = useState<Hospital[]>();
+  const [hospitals, setHospitals] = useState<hospital_id[]>();
 
   var axios = require("axios");
 
@@ -83,7 +88,7 @@ export default function AddHospital() {
         >
           {hospitals === undefined
             ? null
-            : hospitals.map(function (item: Hospital) {
+            : hospitals.map(function (item: hospital_id) {
                 return (
                   <li
                     style={{

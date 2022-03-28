@@ -1,12 +1,31 @@
 import { ButtonUnstyled } from "@mui/base";
 import "../App.css";
-import { MdChevronRight } from "react-icons/md";
 import ReactSwitch from "react-switch";
-import { Link } from "@mui/material";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function Login() {
+export type User = {
+  id: number;
+  created_at: number;
+  name: string;
+  email: string;
+  phone: string;
+  alert_preferences: alert_preferences;
+  job_preferences: job_preferences;
+  hospital_id: hospital_id[];
+};
+
+export type hospital_id = {
+  id: string;
+  created_at: string;
+  name: string;
+  city: string;
+};
+
+export type alert_preferences = { email: boolean; text: boolean };
+export type job_preferences = { call: boolean; shift: boolean };
+
+export default function Dashboard() {
   const navigate = useNavigate();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -20,27 +39,51 @@ export default function Login() {
     setWindowWidth(window.innerWidth);
   };
 
-  const sampleData: {
-    healthSystemId: string;
-    name: string;
-    active: boolean;
-  }[] = [
-    {
-      healthSystemId: "asdkdfj4dx",
-      name: "Wallaby Medical System",
-      active: true,
-    },
-    {
-      healthSystemId: "dfewef0980",
-      name: "Parakeet Medical System",
-      active: true,
-    },
-    {
-      healthSystemId: "asdfsd90980",
-      name: "Octopus Medical System",
-      active: true,
-    },
-  ];
+  const [user, setUser] = useState<User>({
+    id: 1,
+    created_at: 1,
+    name: "Joe Alioto",
+    email: "j.aliot011@gmail.com",
+    phone: "414-234-6369",
+    alert_preferences: { email: true, text: false },
+    job_preferences: { call: false, shift: true },
+    hospital_id: [
+      {
+        id: "1",
+        created_at: "9999999",
+        name: "Medical College of Wisconsin",
+        city: "Wauwatosa",
+      },
+      {
+        id: "2",
+        created_at: "9999999",
+        name: "Gottlieb Memorial Hospital",
+        city: "Melrose Park, IL",
+      },
+    ],
+  });
+
+  // const sampleData: {
+  //   healthSystemId: string;
+  //   name: string;
+  //   active: boolean;
+  // }[] = [
+  //   {
+  //     healthSystemId: "asdkdfj4dx",
+  //     name: "Wallaby Medical System",
+  //     active: true,
+  //   },
+  //   {
+  //     healthSystemId: "dfewef0980",
+  //     name: "Parakeet Medical System",
+  //     active: true,
+  //   },
+  //   {
+  //     healthSystemId: "asdfsd90980",
+  //     name: "Octopus Medical System",
+  //     active: true,
+  //   },
+  // ];
 
   return (
     <div
@@ -52,7 +95,7 @@ export default function Login() {
         paddingBottom: 300,
       }}
     >
-      <h1>Hello [name]</h1>
+      <h1>Hello {user.name}</h1>
       <div style={{ flex: 1 }}>
         <DashboardSection
           title="Alert Preferences"
@@ -81,7 +124,7 @@ export default function Login() {
                   </td>
                   <td style={{ textAlign: "right" }}>
                     <ReactSwitch
-                      checked={true}
+                      checked={user.alert_preferences.email}
                       offColor="#6e6e6e"
                       onColor="#1ee383"
                       uncheckedIcon={false}
@@ -99,7 +142,7 @@ export default function Login() {
                   </td>
                   <td style={{ textAlign: "right" }}>
                     <ReactSwitch
-                      checked={true}
+                      checked={user.alert_preferences.text}
                       offColor="#6e6e6e"
                       onColor="#1ee383"
                       uncheckedIcon={false}
@@ -130,7 +173,7 @@ export default function Login() {
                   </td>
                   <td style={{ textAlign: "right" }}>
                     <ReactSwitch
-                      checked={true}
+                      checked={user.job_preferences.call}
                       offColor="#6e6e6e"
                       onColor="#1ee383"
                       uncheckedIcon={false}
@@ -148,7 +191,7 @@ export default function Login() {
                   </td>
                   <td style={{ textAlign: "right" }}>
                     <ReactSwitch
-                      checked={true}
+                      checked={user.job_preferences.shift}
                       offColor="#6e6e6e"
                       onColor="#1ee383"
                       uncheckedIcon={false}
@@ -158,45 +201,6 @@ export default function Login() {
                         alert("ok");
                       }}
                     />
-                  </td>
-                </tr>
-              </table>
-            </div>
-          }
-        />
-        <DashboardSection
-          title="Your Information"
-          content={
-            <div
-              style={{
-                border: "1px solid",
-                borderRadius: 8,
-                padding: 12,
-              }}
-            >
-              <table>
-                <tr>
-                  <td>
-                    <p>Name</p>
-                  </td>
-                  <td>
-                    <p>[Full Name]</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Email</p>
-                  </td>
-                  <td>
-                    <p>[Email]</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Phone</p>
-                  </td>
-                  <td>
-                    <p>[Phone Number]</p>
                   </td>
                 </tr>
               </table>
@@ -216,8 +220,8 @@ export default function Login() {
                 padding: 12,
               }}
             >
-              {sampleData.map(function (item) {
-                return item.active === true ? (
+              {user.hospital_id.map(function (item) {
+                return (
                   <li
                     style={{
                       flex: 1,
@@ -228,16 +232,72 @@ export default function Login() {
                       marginInline: 4,
                       justifyContent: "space-between",
                     }}
-                    key={item.healthSystemId}
+                    key={item.id}
                     onClick={() => alert("select hospital")}
                   >
                     <div>
-                      <p style={{ fontWeight: "500" }}>{item.name}</p>
+                      <p style={{ fontWeight: "700", marginBottom: 0 }}>
+                        {item.name}
+                      </p>
+                      <p
+                        style={{ fontSize: 12, fontWeight: 500, marginTop: 0 }}
+                      >
+                        {item.city}
+                      </p>
                     </div>
-                    <MdChevronRight />
+                    <ReactSwitch
+                      checked={user.alert_preferences.email}
+                      offColor="#6e6e6e"
+                      onColor="#1ee383"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      width={50}
+                      onChange={(checked) => {
+                        alert("ok");
+                      }}
+                    />{" "}
                   </li>
-                ) : null;
+                );
               })}
+            </div>
+          }
+        />
+        <DashboardSection
+          title="Your Information"
+          content={
+            <div
+              style={{
+                border: "1px solid",
+                borderRadius: 8,
+                padding: 12,
+              }}
+            >
+              <table>
+                <tr>
+                  <td>
+                    <p>Name</p>
+                  </td>
+                  <td>
+                    <p>{user.name}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p>Email</p>
+                  </td>
+                  <td>
+                    <p>{user.email}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p>Phone</p>
+                  </td>
+                  <td>
+                    <p>{user.phone}</p>
+                  </td>
+                </tr>
+              </table>
             </div>
           }
         />
