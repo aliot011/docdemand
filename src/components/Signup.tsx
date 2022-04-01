@@ -118,7 +118,14 @@ export default function Signup() {
               <label>
                 Email:
                 <input
-                  type="text"
+                  type="email"
+                  onChange={(evt) => setEmail(evt.currentTarget.value)}
+                />
+              </label>
+              <label>
+                Phone:
+                <input
+                  type="tel"
                   onChange={(evt) => setEmail(evt.currentTarget.value)}
                 />
               </label>

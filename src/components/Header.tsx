@@ -1,6 +1,12 @@
 import { Link } from "@mui/material";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { GlobalStateContext } from "../contexts/GlobalStateContext";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const globalState = useContext(GlobalStateContext);
+
   return (
     <div
       style={{
@@ -20,9 +26,16 @@ export default function Header() {
       }}
     >
       <h2>DocDemand</h2>
-      <Link underline="none" style={{ cursor: "pointer" }} href="../">
-        <h4 style={{ color: "#fff", margin: 0 }}>Log Out</h4>
-      </Link>
+      {globalState.state.token === "" ? null : (
+        <Link
+          underline="none"
+          style={{ cursor: "pointer" }}
+          href="../login"
+          onClick={() => globalState.setState({ token: "" })}
+        >
+          <h4 style={{ color: "#fff", margin: 0 }}>Log Out</h4>
+        </Link>
+      )}
     </div>
   );
 }

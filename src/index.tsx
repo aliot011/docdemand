@@ -9,23 +9,28 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import AddHospital from "./components/AddHospital";
 import UserIndex from "./components/UserIndex";
+import { getGlobalStateProvider } from "./contexts/GlobalStateContext";
+
+const GlobalStateProvider = getGlobalStateProvider();
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="signup" element={<Signup />} />
-          <Route path="login" element={<Login />} />
-          <Route path="dashboard" element={<UserIndex />}>
-            <Route index element={<Dashboard />} />
-            <Route path="addhospital" element={<AddHospital />} />
+    <GlobalStateProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route path="dashboard" element={<UserIndex />}>
+              <Route index element={<Dashboard />} />
+              <Route path="addhospital" element={<AddHospital />} />
+            </Route>
+            <Route path="" element={<Signup />} />
           </Route>
-          <Route path="" element={<Signup />} />
-        </Route>
-        <Route path="*" element={<App />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </GlobalStateProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

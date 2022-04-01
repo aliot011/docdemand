@@ -1,10 +1,46 @@
 import { ButtonUnstyled } from "@mui/base";
 import { Link } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import doc1 from "../assets/doc1.png";
+import { GlobalStateContext } from "../contexts/GlobalStateContext";
+import { useContext } from "react";
 
 export default function Login() {
   let navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const authContext = useContext(GlobalStateContext);
+
+  var axios = require("axios");
+  var data = JSON.stringify({
+    email: email,
+    password: password,
+  });
+
+  var config = {
+    method: "post",
+    url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/login",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  function login() {
+    axios(config)
+      .then(function (response: any) {
+        authContext.setState({ token: "" });
+        alert(JSON.stringify(response.data));
+        authContext.setState({ token: response.data.authToken });
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      })
+      .finally(navigate("../dashboard"));
+  }
 
   return (
     <div
@@ -17,6 +53,7 @@ export default function Login() {
         flexDirection: "column",
       }}
     >
+      <p>{authContext.state.token}</p>
       <div
         style={{
           display: "flex",
@@ -45,14 +82,18 @@ export default function Login() {
           <h3>Login to DocDemand</h3>
           <label>
             Email:
-            <input type="text" />
+            <input type="text" onChange={(evt) => setEmail(evt.target.value)} />
           </label>
           <label>
             Password:
-            <input type="password" />
+            <input
+              type="password"
+              onChange={(evt) => setPassword(evt.target.value)}
+            />
           </label>
+          <p>{email}</p>
+          <p>{password}</p>
           <ButtonUnstyled
-            // onClick={() => setStep(step + 1)}
             style={{
               margin: 12,
               borderRadius: 4,
@@ -65,7 +106,7 @@ export default function Login() {
               background: "#00b0f0",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/dashboard")}
+            onClick={() => login()}
           >
             Login
           </ButtonUnstyled>

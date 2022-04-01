@@ -1,11 +1,6 @@
 import { ButtonUnstyled } from "@mui/base";
 import { useEffect, useState } from "react";
-import {
-  MdAddCircle,
-  MdCancel,
-  MdChevronRight,
-  MdDelete,
-} from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
 
 export type hospital_id = {
   id: string;
