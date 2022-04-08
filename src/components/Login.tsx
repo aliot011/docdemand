@@ -1,9 +1,16 @@
 import { ButtonUnstyled } from "@mui/base";
 import { Link } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import { useContext } from "react";
+import axios from "axios";
+
+function getCancelTokenSource() {
+  const cancelToken = axios.CancelToken;
+  const source = cancelToken.source();
+  return source;
+}
 
 export default function Login() {
   let navigate = useNavigate();
@@ -11,35 +18,72 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const authContext = useContext(GlobalStateContext);
+  const globalContext = useContext(GlobalStateContext);
 
-  var axios = require("axios");
-  var data = JSON.stringify({
-    email: email,
-    password: password,
-  });
-
-  var config = {
-    method: "post",
-    url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/login",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
+  useEffect(() => {
+    if (globalContext.state.token) {
+      globalContext.setState({ token: "" });
+    }
+  }, []);
 
   function login() {
-    axios(config)
-      .then(function (response: any) {
-        authContext.setState({ token: "" });
-        alert(JSON.stringify(response.data));
-        authContext.setState({ token: response.data.authToken });
+    const cancelTokenSource = getCancelTokenSource();
+
+    axios({
+      method: "POST",
+      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/login",
+      cancelToken: cancelTokenSource.token,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        email: email,
+        password: password,
+      },
+    })
+      .then((response) => {
+        globalContext.setState({
+          token: response.data.authToken,
+        });
+
+        navigate("../provider/listings");
       })
-      .catch(function (error: any) {
-        console.log(error);
-      })
-      .finally(navigate("../provider/listings"));
+      .catch((error) => {
+        if (axios.isCancel(error)) {
+          //User navigated away
+        } else if (axios.isAxiosError(error)) {
+          //TODO: Handle whatever error comes back
+          alert("Error logging in.");
+        }
+      });
   }
+
+  // var data = JSON.stringify({
+  //   email: email,
+  //   password: password,
+  // });
+
+  // var config = {
+  //   method: "post",
+  //   url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/login",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   data: data,
+  // };
+
+  // function login() {
+  //   axios(config)
+  //     .then(function (response: any) {
+  //       globalContext.setState({ token: "" });
+  //       alert(JSON.stringify(response.data));
+  //       globalContext.setState({ token: response.data.authToken });
+  //     })
+  //     .catch(function (error: any) {
+  //       console.log(error);
+  //     })
+  //     .finally(() => navigate("../provider/listings"));
+  // }
 
   return (
     <div
@@ -52,7 +96,7 @@ export default function Login() {
         flexDirection: "column",
       }}
     >
-      <p>{authContext.state.token}</p>
+      <p>{globalContext.state.token}</p>
       <div
         style={{
           display: "flex",

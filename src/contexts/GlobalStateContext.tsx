@@ -44,10 +44,14 @@ function getGlobalStateProvider() {
     useEffect(() => {
       //Load initial state from device - if it exists.
       const loadState = async () => {
-        const state = localStorage.getItem("state");
-        if (state) {
-          setState(JSON.parse(state));
+        const authToken = localStorage.getItem("authToken");
+        if (authToken) {
+          setState({
+            token: authToken,
+          });
         }
+
+        console.log("Reloading state..." + `${authToken}`);
 
         // globalContext.state.loaded = true;
       };
@@ -60,7 +64,7 @@ function getGlobalStateProvider() {
     useEffect(() => {
       //The state has changed!
       const saveState = async () => {
-        localStorage.setItem("state", JSON.stringify(state));
+        localStorage.setItem("authToken", state.token ?? "");
       };
 
       saveState().catch((error) => {

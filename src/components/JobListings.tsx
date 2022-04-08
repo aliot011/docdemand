@@ -7,6 +7,13 @@ import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
 import { Link } from "@mui/material";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import axios from "axios";
+
+function getCancelTokenSource() {
+  const cancelToken = axios.CancelToken;
+  const source = cancelToken.source();
+  return source;
+}
 
 export default function JobListings() {
   const navigate = useNavigate();
@@ -26,16 +33,6 @@ export default function JobListings() {
     },
   ]);
 
-  var axios = require("axios");
-
-  var getUser = {
-    method: "get",
-    url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
-    headers: {
-      Authorization: `Bearer ${globalState.state.token}`,
-    },
-  };
-
   const [user, setUser] = useState<User>();
 
   const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
@@ -43,29 +40,54 @@ export default function JobListings() {
   const [call, setCall] = useState<boolean>(false);
   const [shift, setShift] = useState<boolean>(false);
 
-  if (!user)
-    axios(getUser)
+  useEffect(() => {
+    const cancelTokenSource = getCancelTokenSource();
+
+    axios({
+      method: "GET",
+      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
+      headers: {
+        Authorization: `Bearer ${globalState.state.token}`,
+      },
+    })
       .then(function (response: any) {
         // alert(JSON.stringify(`Token: ${globalState.state.token}`));
         setUser(response.data);
         // alert(user);
-      })
-      .then(function (user: User) {
-        setEmailAlerts(user!.alert_preferences.email);
-        setTextAlerts(user!.alert_preferences.text);
-        setCall(user!.job_preferences.call);
-        setShift(user!.job_preferences.shift);
+        setEmailAlerts(response.data!.alert_preferences.email);
+        setTextAlerts(response.data!.alert_preferences.text);
+        setCall(response.data!.job_preferences.call);
+        setShift(response.data!.job_preferences.shift);
       })
       .catch(function (error: any) {
-        console.log(error);
+        if (axios.isCancel(error)) {
+          //React no longer cares
+        } else if (axios.isAxiosError(error)) {
+          //The server most likely said something was wrong (i.e. we got
+          //something other than a 200 OK response).
+
+          console.log(error.response?.data ?? "Unknown server error.");
+        } else {
+          //This is some error that happened that doesn't directly have to do
+          //with the request (such as you passed a bad parameter).
+
+          const errorText: string = `${error}`;
+        }
       });
+
+    return () => {
+      cancelTokenSource.cancel();
+    };
+  }, [axios, globalState.state.token]);
+
+  //if (!user)
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     window.addEventListener("resize", updateWidthAndHeight);
     return () => window.removeEventListener("resize", updateWidthAndHeight);
-  });
+  }, []);
 
   const updateWidthAndHeight = () => {
     setWindowWidth(window.innerWidth);
@@ -224,7 +246,9 @@ export default function JobListings() {
                 background: "transparent",
                 border: "1px solid #D0D5DD",
               }}
-              onClick={page < 2 ? () => null : setPage(page - 1)}
+              onClick={
+                page < 2 ? () => null : () => setPage((prev) => prev - 1)
+              }
             >
               <MdChevronLeft />
             </ButtonUnstyled>
@@ -265,8 +289,9 @@ export default function JobListings() {
                 border: "1px solid #D0D5DD",
               }}
               onClick={() => {
-                setPage(page + 1);
-                alert(page);
+                //setPage(page + 1);
+                setPage((prev) => prev + 1);
+                //alert(page);
               }}
             >
               <MdChevronRight />
