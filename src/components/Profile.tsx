@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
 
-export default function Dashboard() {
+export default function Profile() {
   const navigate = useNavigate();
   const globalState = useContext(GlobalStateContext);
 
@@ -61,125 +61,10 @@ export default function Dashboard() {
       <div
         style={{
           flex: 1,
-          background: "#fff",
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
-          padding: 20,
-          paddingBottom: 300,
         }}
       >
         <h1>Hello {user.name}</h1>
         <div style={{ flex: 1 }}>
-          <DashboardSection
-            title="Alert Preferences"
-            content={
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                }}
-              >
-                <table
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    border: "1px solid",
-                    borderRadius: 8,
-                    padding: 12,
-                    marginBottom: 12,
-                  }}
-                >
-                  <th>Contact Method</th>
-                  <tr>
-                    <td>
-                      <p>Email alerts</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={emailAlerts}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          setEmailAlerts(checked);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <p>Text alerts</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={textAlerts}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          setTextAlerts(checked);
-                          // alert("ok");
-                        }}
-                      />
-                    </td>
-                  </tr>
-                </table>
-                {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
-                <table
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    border: "1px solid",
-                    borderRadius: 8,
-                    padding: 12,
-                    marginBottom: 12,
-                  }}
-                >
-                  <th>Job Type</th>
-                  <tr>
-                    <td>
-                      <p>Call</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={user.job_preferences.call}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          alert("ok");
-                        }}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <p>Shift</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={user.job_preferences.shift}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          alert("ok");
-                        }}
-                      />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            }
-          />
           <DashboardSection
             title={"Your Hospitals"}
             buttonTitle="Add Hospital"
@@ -210,7 +95,7 @@ export default function Dashboard() {
                     >
                       <div>
                         <p style={{ fontWeight: "700", marginBottom: 0 }}>
-                          {item.name}
+                          {item._Name}
                         </p>
                         <p
                           style={{
@@ -219,7 +104,7 @@ export default function Dashboard() {
                             marginTop: 0,
                           }}
                         >
-                          {item.city}
+                          {item.Address}
                         </p>
                       </div>
                       <ReactSwitch
@@ -232,7 +117,7 @@ export default function Dashboard() {
                         onChange={(checked) => {
                           alert("ok");
                         }}
-                      />{" "}
+                      />
                     </li>
                   );
                 })}

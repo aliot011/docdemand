@@ -54,7 +54,7 @@ h4 {
 }
 
 p {
-  margin: 12;
+  margin: 0;
 }
 
 input {
@@ -74,7 +74,8 @@ label {
   margin: 8px;
 }
 
-td,
+td {text-align: left;}
+
 th {
   display: flexbox;
   flex-direction: row;

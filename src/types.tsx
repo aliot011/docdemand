@@ -12,10 +12,10 @@ export type User =
   | undefined;
 
 export type hospital_id = {
-  id: string;
-  created_at: string;
-  name: string;
-  city: string;
+  id: number;
+  _Name: string;
+  Address: string;
+  Phone: string;
 };
 
 export type alert_preferences = { email: boolean; text: boolean };

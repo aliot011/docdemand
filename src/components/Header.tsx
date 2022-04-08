@@ -3,24 +3,22 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 
-export default function Header() {
+export default function Header(props: { windowTrigger: number }) {
   const navigate = useNavigate();
   const globalState = useContext(GlobalStateContext);
 
   return (
     <div
       style={{
-        background: "#111111",
+        background: "#fff",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         padding: 10,
-        position: "sticky",
         top: 0,
         right: 0,
         left: 0,
-        zIndex: 99,
         paddingInline: 30,
         color: "lightgreen",
       }}
@@ -33,7 +31,7 @@ export default function Header() {
           href="../login"
           onClick={() => globalState.setState({ token: "" })}
         >
-          <h4 style={{ color: "#fff", margin: 0 }}>Log Out</h4>
+          <h4 style={{ color: "black", margin: 0 }}>Log Out</h4>
         </Link>
       )}
     </div>

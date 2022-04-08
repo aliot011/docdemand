@@ -1,16 +1,12 @@
 import { ButtonUnstyled } from "@mui/base";
 import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
-
-export type hospital_id = {
-  id: string;
-  created_at: string;
-  name: string;
-  city: string;
-};
+import type { hospital_id } from "../types";
 
 export default function AddHospital() {
   const [hospitals, setHospitals] = useState<hospital_id[]>();
+
+  const [filter, setFilter] = useState<string>("");
 
   var axios = require("axios");
 
@@ -46,6 +42,7 @@ export default function AddHospital() {
         <div style={{ flex: 1, display: "flex" }}>
           <input
             type="text"
+            onChange={(event) => setFilter(event.target.value)}
             style={{
               margin: 0,
               borderRadius: 0,
@@ -101,12 +98,12 @@ export default function AddHospital() {
                   >
                     <div>
                       <p style={{ fontWeight: "700", marginBottom: 0 }}>
-                        {item.name}
+                        {item._Name}
                       </p>
                       <p
                         style={{ fontSize: 12, fontWeight: 500, marginTop: 0 }}
                       >
-                        {item.city}
+                        {item.Address}
                       </p>
                     </div>
                     <MdAddCircle color={"lightgreen"} size={24} />

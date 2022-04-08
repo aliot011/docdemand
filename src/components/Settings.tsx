@@ -1,0 +1,227 @@
+import { ButtonUnstyled } from "@mui/base";
+import "../App.css";
+import ReactSwitch from "react-switch";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { GlobalStateContext } from "../contexts/GlobalStateContext";
+import type { User } from "../types";
+
+export default function Settings() {
+  const navigate = useNavigate();
+  const globalState = useContext(GlobalStateContext);
+
+  var axios = require("axios");
+
+  var getUser = {
+    method: "get",
+    url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
+    headers: {
+      Authorization: `Bearer ${globalState.state.token}`,
+    },
+  };
+
+  const [user, setUser] = useState<User>();
+
+  const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
+  const [textAlerts, setTextAlerts] = useState<boolean>(false);
+  const [call, setCall] = useState<boolean>(false);
+  const [shift, setShift] = useState<boolean>(false);
+
+  if (!user)
+    axios(getUser)
+      .then(function (response: any) {
+        // alert(JSON.stringify(`Token: ${globalState.state.token}`));
+        setUser(response.data);
+        // alert(user);
+      })
+      .then(function (user: User) {
+        setEmailAlerts(user!.alert_preferences.email);
+        setTextAlerts(user!.alert_preferences.text);
+        setCall(user!.job_preferences.call);
+        setShift(user!.job_preferences.shift);
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", updateWidthAndHeight);
+    return () => window.removeEventListener("resize", updateWidthAndHeight);
+  });
+
+  const updateWidthAndHeight = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  if (!user) return <p>loading... {globalState.state.token}</p>;
+  else
+    return (
+      <div
+        style={{
+          flex: 1,
+        }}
+      >
+        <h1>Hello {user.name}</h1>
+        <div style={{ flex: 1 }}>
+          <DashboardSection
+            title="Alert Preferences"
+            content={
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
+                <table
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    border: "1px solid",
+                    borderRadius: 8,
+                    padding: 12,
+                    marginBottom: 12,
+                  }}
+                >
+                  <th>Contact Method</th>
+                  <tr>
+                    <td>
+                      <p>Email alerts</p>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <ReactSwitch
+                        checked={emailAlerts}
+                        offColor="#6e6e6e"
+                        onColor="#1ee383"
+                        uncheckedIcon={false}
+                        checkedIcon={false}
+                        width={50}
+                        onChange={(checked) => {
+                          setEmailAlerts(checked);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>Text alerts</p>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <ReactSwitch
+                        checked={textAlerts}
+                        offColor="#6e6e6e"
+                        onColor="#1ee383"
+                        uncheckedIcon={false}
+                        checkedIcon={false}
+                        width={50}
+                        onChange={(checked) => {
+                          setTextAlerts(checked);
+                          // alert("ok");
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </table>
+                {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
+                <table
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    border: "1px solid",
+                    borderRadius: 8,
+                    padding: 12,
+                    marginBottom: 12,
+                  }}
+                >
+                  <th>Job Type</th>
+                  <tr>
+                    <td>
+                      <p>Call</p>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <ReactSwitch
+                        checked={user.job_preferences.call}
+                        offColor="#6e6e6e"
+                        onColor="#1ee383"
+                        uncheckedIcon={false}
+                        checkedIcon={false}
+                        width={50}
+                        onChange={(checked) => {
+                          alert("ok");
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>Shift</p>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <ReactSwitch
+                        checked={user.job_preferences.shift}
+                        offColor="#6e6e6e"
+                        onColor="#1ee383"
+                        uncheckedIcon={false}
+                        checkedIcon={false}
+                        width={50}
+                        onChange={(checked) => {
+                          alert("ok");
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            }
+          />
+        </div>
+      </div>
+    );
+}
+
+function DashboardSection(props: {
+  title: string;
+  button?: boolean;
+  buttonTitle?: string;
+  handleButton?: any;
+  content?: any;
+}) {
+  return (
+    <div>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginTop: 28,
+        }}
+      >
+        <h2 style={{ marginBottom: 16 }}>{props.title}</h2>
+        {props.button === undefined || false ? null : (
+          <ButtonUnstyled
+            style={{
+              margin: 12,
+              borderRadius: 4,
+              padding: 12,
+              alignSelf: "flex-start",
+              fontSize: 14,
+              color: "#fff",
+              fontWeight: "600",
+              border: "0px",
+              background: "#00b0f0",
+              cursor: "pointer",
+            }}
+            onClick={props.handleButton}
+          >
+            {props.buttonTitle}
+          </ButtonUnstyled>
+        )}
+      </div>
+      <div>{props.content}</div>
+    </div>
+  );
+}

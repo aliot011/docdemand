@@ -2,7 +2,6 @@ import { ButtonUnstyled } from "@mui/base";
 import { Link } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import doc1 from "../assets/doc1.png";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import { useContext } from "react";
 
@@ -39,14 +38,14 @@ export default function Login() {
       .catch(function (error: any) {
         console.log(error);
       })
-      .finally(navigate("../dashboard"));
+      .finally(navigate("../provider/listings"));
   }
 
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(#e9e9e9,#e1e1e1)",
+        background: "#eaeaea",
         alignItems: "center",
         justifyContent: "center",
         display: "flex",
@@ -60,60 +59,42 @@ export default function Login() {
           padding: 16,
           borderRadius: 8,
           background: "#fff",
-          boxShadow: "2px 2px 4px rgba(0,0,0,0.2)",
-          minHeight: "80%",
-          minWidth: "80%",
-          flex: 1,
-          margin: 80,
+          border: "1px solid gray",
+          flexDirection: "column",
         }}
       >
-        <div
+        <h3 style={{ marginBottom: 24 }}>Login to DocDemand</h3>
+        <label>
+          Email:
+          <input type="text" onChange={(evt) => setEmail(evt.target.value)} />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            onChange={(evt) => setPassword(evt.target.value)}
+          />
+        </label>
+        <ButtonUnstyled
           style={{
-            flex: 2,
-            borderRight: "1px solid #EAEAEA",
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
+            margin: 12,
+            borderRadius: 4,
+            padding: 12,
+            alignSelf: "flex-start",
+            fontSize: 14,
+            color: "#fff",
+            fontWeight: "600",
+            border: "0px",
+            background: "#00b0f0",
+            cursor: "pointer",
           }}
+          onClick={() => login()}
         >
-          <img src={doc1} style={{ maxWidth: 260 }} />
-        </div>
-        <div style={{ flex: 3, padding: 24 }}>
-          <h3>Login to DocDemand</h3>
-          <label>
-            Email:
-            <input type="text" onChange={(evt) => setEmail(evt.target.value)} />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              onChange={(evt) => setPassword(evt.target.value)}
-            />
-          </label>
-          <p>{email}</p>
-          <p>{password}</p>
-          <ButtonUnstyled
-            style={{
-              margin: 12,
-              borderRadius: 4,
-              padding: 12,
-              alignSelf: "flex-start",
-              fontSize: 14,
-              color: "#fff",
-              fontWeight: "600",
-              border: "0px",
-              background: "#00b0f0",
-              cursor: "pointer",
-            }}
-            onClick={() => login()}
-          >
-            Login
-          </ButtonUnstyled>
-          <p style={{ fontSize: 12, margin: 12 }}>
-            Don't have an account? <Link href="./signup">Signup</Link>.
-          </p>
-        </div>
+          Login
+        </ButtonUnstyled>
+        <p style={{ fontSize: 12, margin: 12 }}>
+          Don't have an account? <Link href="./signup">Signup</Link>.
+        </p>
       </div>
     </div>
   );
