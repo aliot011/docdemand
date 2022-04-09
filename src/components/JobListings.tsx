@@ -46,14 +46,13 @@ export default function JobListings() {
     axios({
       method: "GET",
       url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
+      cancelToken: cancelTokenSource.token,
       headers: {
         Authorization: `Bearer ${globalState.state.token}`,
       },
     })
       .then(function (response: any) {
-        // alert(JSON.stringify(`Token: ${globalState.state.token}`));
         setUser(response.data);
-        // alert(user);
         setEmailAlerts(response.data!.alert_preferences.email);
         setTextAlerts(response.data!.alert_preferences.text);
         setCall(response.data!.job_preferences.call);
@@ -66,7 +65,16 @@ export default function JobListings() {
           //The server most likely said something was wrong (i.e. we got
           //something other than a 200 OK response).
 
-          console.log(error.response?.data ?? "Unknown server error.");
+          if (error.response?.status === 401) {
+            globalState.setState((prev) => {
+              return {
+                ...prev,
+                token: "",
+              };
+            });
+          } else {
+            console.log(error.response?.data ?? "Unknown server error.");
+          }
         } else {
           //This is some error that happened that doesn't directly have to do
           //with the request (such as you passed a bad parameter).
@@ -80,8 +88,6 @@ export default function JobListings() {
     };
   }, [axios, globalState.state.token]);
 
-  //if (!user)
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -93,8 +99,7 @@ export default function JobListings() {
     setWindowWidth(window.innerWidth);
   };
 
-  if (!user) return <p>loading... {globalState.state.token}</p>;
-  //here
+  if (!user) return <p>Loading...</p>;
   else
     return (
       <div
@@ -153,78 +158,82 @@ export default function JobListings() {
           />
         </div> */}
         <table>
-          <tr
-            style={{
-              padding: 12,
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              display: "flex",
-              borderRadius: 12,
-              background: "#FBFBFD",
-              textAlign: "left",
-            }}
-          >
-            <th style={{ display: "flex", width: "20%" }}>
-              <ButtonUnstyled style={filterButtonStyle}>
-                <p>Start Time</p>
-              </ButtonUnstyled>
-            </th>
-            <th style={{ display: "flex", width: "20%" }}>
-              <ButtonUnstyled style={filterButtonStyle}>
-                <p>End Time</p>
-              </ButtonUnstyled>
-            </th>
-            <th style={{ display: "flex", width: "20%" }}>
-              <ButtonUnstyled style={filterButtonStyle}>
-                <p>Hospital</p>
-              </ButtonUnstyled>
-            </th>
-            <th style={{ display: "flex", width: "20%" }}>
-              <ButtonUnstyled style={filterButtonStyle}>
-                <p>Compensation ($)</p>
-              </ButtonUnstyled>
-            </th>
-            <th style={{ display: "flex", width: "20%" }}></th>
-          </tr>
-
-          {data.map(function (item) {
-            return (
-              <tr
-                style={{
-                  paddingInline: 20,
-                  paddingBlock: 40,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  display: "flex",
-                  borderBottom: "1px solid #D0D5DD",
-                  textAlign: "left",
-                }}
-              >
-                <td style={{ display: "flex", width: "20%" }}>
-                  {item.time.start.toLocaleDateString("en-US")},{" "}
-                  {item.time.end.toLocaleTimeString("en-US")}
-                </td>
-                <td style={{ display: "flex", width: "20%" }}>
-                  {item.time.start.toLocaleDateString("en-US")},{" "}
-                  {item.time.end.toLocaleTimeString("en-US")}
-                </td>
-                <td style={{ display: "flex", width: "20%" }}>
-                  {item.hospital}
-                </td>
-                <td style={{ display: "flex", width: "20%" }}>
-                  ${item.rate}/hour
-                </td>
-                <td style={{ display: "flex", width: "20%" }}>
-                  <Link
-                    style={{ cursor: "pointer" }}
-                    onClick={() => navigate("./detail")}
-                  >
-                    Claim Job <MdChevronRight />
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
+          <thead>
+            <tr
+              style={{
+                padding: 12,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                display: "flex",
+                borderRadius: 12,
+                background: "#FBFBFD",
+                textAlign: "left",
+              }}
+            >
+              <th style={{ display: "flex", width: "20%" }}>
+                <ButtonUnstyled style={filterButtonStyle}>
+                  <p>Start Time</p>
+                </ButtonUnstyled>
+              </th>
+              <th style={{ display: "flex", width: "20%" }}>
+                <ButtonUnstyled style={filterButtonStyle}>
+                  <p>End Time</p>
+                </ButtonUnstyled>
+              </th>
+              <th style={{ display: "flex", width: "20%" }}>
+                <ButtonUnstyled style={filterButtonStyle}>
+                  <p>Hospital</p>
+                </ButtonUnstyled>
+              </th>
+              <th style={{ display: "flex", width: "20%" }}>
+                <ButtonUnstyled style={filterButtonStyle}>
+                  <p>Compensation ($)</p>
+                </ButtonUnstyled>
+              </th>
+              <th style={{ display: "flex", width: "20%" }}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(function (item) {
+              return (
+                <tr
+                  key={item.id}
+                  style={{
+                    paddingInline: 20,
+                    paddingBlock: 40,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    display: "flex",
+                    borderBottom: "1px solid #D0D5DD",
+                    textAlign: "left",
+                  }}
+                >
+                  <td style={{ display: "flex", width: "20%" }}>
+                    {item.time.start.toLocaleDateString("en-US")},{" "}
+                    {item.time.end.toLocaleTimeString("en-US")}
+                  </td>
+                  <td style={{ display: "flex", width: "20%" }}>
+                    {item.time.start.toLocaleDateString("en-US")},{" "}
+                    {item.time.end.toLocaleTimeString("en-US")}
+                  </td>
+                  <td style={{ display: "flex", width: "20%" }}>
+                    {item.hospital}
+                  </td>
+                  <td style={{ display: "flex", width: "20%" }}>
+                    ${item.rate}/hour
+                  </td>
+                  <td style={{ display: "flex", width: "20%" }}>
+                    <Link
+                      style={{ cursor: "pointer" }}
+                      onClick={() => navigate("./detail")}
+                    >
+                      Claim Job <MdChevronRight />
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
         <div
           style={{ display: "flex", marginTop: 24, justifyContent: "flex-end" }}

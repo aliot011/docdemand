@@ -7,6 +7,7 @@ import {
 } from "react";
 
 export type GlobalStateType = {
+  ready: boolean;
   token: string;
 };
 
@@ -18,18 +19,21 @@ export type GlobalStateType = {
 /// Shaun's code
 
 export type GlobalStateAccessor = {
+  ready: boolean;
   state: Partial<GlobalStateType>;
   setState: React.Dispatch<React.SetStateAction<Partial<GlobalStateType>>>;
 };
 
 export function initializeGlobalState(): GlobalStateType {
   return {
+    ready: false,
     token: "",
   };
 }
 
 const GlobalStateContext = createContext<GlobalStateAccessor>({
   //Temporary data
+  ready: false,
   state: initializeGlobalState(),
   setState: () => {},
 });
@@ -47,13 +51,17 @@ function getGlobalStateProvider() {
         const authToken = localStorage.getItem("authToken");
         if (authToken) {
           setState({
+            ready: true,
             token: authToken,
+          });
+        } else {
+          setState({
+            ready: true,
+            token: "",
           });
         }
 
-        console.log("Reloading state..." + `${authToken}`);
-
-        // globalContext.state.loaded = true;
+        globalContext.ready = true;
       };
 
       loadState().catch((error) => {
@@ -73,7 +81,9 @@ function getGlobalStateProvider() {
     }, [state]);
 
     return (
-      <GlobalStateContext.Provider value={{ state: state, setState }}>
+      <GlobalStateContext.Provider
+        value={{ ready: false, state: state, setState: setState }}
+      >
         {props.children}
       </GlobalStateContext.Provider>
     );

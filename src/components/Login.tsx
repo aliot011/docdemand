@@ -20,11 +20,11 @@ export default function Login() {
 
   const globalContext = useContext(GlobalStateContext);
 
-  useEffect(() => {
-    if (globalContext.state.token) {
-      globalContext.setState({ token: "" });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (globalContext.state.token) {
+  //     globalContext.setState({ token: "" });
+  //   }
+  // }, []);
 
   function login() {
     const cancelTokenSource = getCancelTokenSource();
@@ -42,8 +42,11 @@ export default function Login() {
       },
     })
       .then((response) => {
-        globalContext.setState({
-          token: response.data.authToken,
+        globalContext.setState((prev) => {
+          return {
+            ready: true,
+            token: response.data.authToken,
+          };
         });
 
         navigate("../provider/listings");

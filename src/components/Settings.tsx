@@ -17,8 +17,6 @@ export default function Settings() {
   const navigate = useNavigate();
   const globalState = useContext(GlobalStateContext);
 
-  var axios = require("axios");
-
   // var getUser = {
   //   method: "get",
   //   url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
@@ -40,14 +38,13 @@ export default function Settings() {
     axios({
       method: "GET",
       url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
+      cancelToken: cancelTokenSource.token,
       headers: {
         Authorization: `Bearer ${globalState.state.token}`,
       },
     })
       .then(function (response: any) {
-        // alert(JSON.stringify(`Token: ${globalState.state.token}`));
         setUser(response.data);
-        // alert(user);
         setEmailAlerts(response.data!.alert_preferences.email);
         setTextAlerts(response.data!.alert_preferences.text);
         setCall(response.data!.job_preferences.call);
@@ -59,13 +56,21 @@ export default function Settings() {
         } else if (axios.isAxiosError(error)) {
           //The server most likely said something was wrong (i.e. we got
           //something other than a 200 OK response).
-
-          console.log(error.response?.data ?? "Unknown server error.");
+          if (error.response?.status === 401) {
+            globalState.setState((prev) => {
+              return {
+                ...prev,
+                token: "",
+              };
+            });
+          } else {
+            console.log(error.response?.data ?? "Unknown server error.");
+          }
         } else {
           //This is some error that happened that doesn't directly have to do
           //with the request (such as you passed a bad parameter).
 
-          const errorText: string = `${error}`;
+          console.log(error);
         }
       });
 
@@ -102,7 +107,7 @@ export default function Settings() {
     setWindowWidth(window.innerWidth);
   };
 
-  if (!user) return <p>loading... {globalState.state.token}</p>;
+  if (!user) return <p>Loading...</p>;
   else
     return (
       <div
@@ -132,44 +137,50 @@ export default function Settings() {
                     marginBottom: 12,
                   }}
                 >
-                  <th>Contact Method</th>
-                  <tr>
-                    <td>
-                      <p>Email alerts</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={emailAlerts}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          setEmailAlerts(checked);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <p>Text alerts</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={textAlerts}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          setTextAlerts(checked);
-                          // alert("ok");
-                        }}
-                      />
-                    </td>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <th>Contact Method</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>Email alerts</p>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <ReactSwitch
+                          checked={emailAlerts}
+                          offColor="#6e6e6e"
+                          onColor="#1ee383"
+                          uncheckedIcon={false}
+                          checkedIcon={false}
+                          width={50}
+                          onChange={(checked) => {
+                            setEmailAlerts(checked);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>Text alerts</p>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <ReactSwitch
+                          checked={textAlerts}
+                          offColor="#6e6e6e"
+                          onColor="#1ee383"
+                          uncheckedIcon={false}
+                          checkedIcon={false}
+                          width={50}
+                          onChange={(checked) => {
+                            setTextAlerts(checked);
+                            // alert("ok");
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
                 <table
@@ -182,43 +193,49 @@ export default function Settings() {
                     marginBottom: 12,
                   }}
                 >
-                  <th>Job Type</th>
-                  <tr>
-                    <td>
-                      <p>Call</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={user.job_preferences.call}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          alert("ok");
-                        }}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <p>Shift</p>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <ReactSwitch
-                        checked={user.job_preferences.shift}
-                        offColor="#6e6e6e"
-                        onColor="#1ee383"
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        width={50}
-                        onChange={(checked) => {
-                          alert("ok");
-                        }}
-                      />
-                    </td>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <th>Job Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>Call</p>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <ReactSwitch
+                          checked={user.job_preferences.call}
+                          offColor="#6e6e6e"
+                          onColor="#1ee383"
+                          uncheckedIcon={false}
+                          checkedIcon={false}
+                          width={50}
+                          onChange={(checked) => {
+                            alert("ok");
+                          }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>Shift</p>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <ReactSwitch
+                          checked={user.job_preferences.shift}
+                          offColor="#6e6e6e"
+                          onColor="#1ee383"
+                          uncheckedIcon={false}
+                          checkedIcon={false}
+                          width={50}
+                          onChange={(checked) => {
+                            alert("ok");
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             }
