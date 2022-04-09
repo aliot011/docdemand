@@ -12,6 +12,7 @@ import { getGlobalStateProvider } from "./contexts/GlobalStateContext";
 import DashboardChrome from "./components/DashboardChrome";
 import Settings from "./components/Settings";
 import Profile from "./components/Profile";
+import AuthorizationRequired from "./components/AuthorizationRequired";
 
 const GlobalStateProvider = getGlobalStateProvider();
 
@@ -23,16 +24,18 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route path="signup" element={<Signup />} />
             <Route path="login" element={<Login />} />
-            <Route path="provider" element={<DashboardChrome />}>
-              <Route path="listings" element={<JobListings />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="profile" element={<Profile />}>
-                <Route path="addhospital" element={<AddHospital />} />
+            <Route element={<AuthorizationRequired />}>
+              <Route path="provider" element={<DashboardChrome />}>
+                <Route path="listings" element={<JobListings />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="profile" element={<Profile />}>
+                  <Route path="addhospital" element={<AddHospital />} />
+                </Route>
+                <Route path="" element={<JobListings />} />
+                <Route index element={<JobListings />} />
               </Route>
-              <Route path="" element={<JobListings />} />
-              <Route index element={<JobListings />} />
+              <Route path="addhospital" element={<AddHospital />} />
             </Route>
-            <Route path="addhospital" element={<AddHospital />} />
             <Route path="" element={<Signup />} />
           </Route>
           <Route path="*" element={<App />} />
