@@ -1,0 +1,54 @@
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    margin: 4px;
+}
+
+h3 {
+    margin: 4px;
+}
+
+h4 {
+    margin: 0px;
+}
+
+p {
+    margin: 0;
+}
+
+input {
+    border: none;
+    background-color: #eaeaea;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-block: 4px;
+}
+
+label {
+    flex-direction: column;
+    display: flex;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 8px;
+}
+
+th {
+    padding: 4px;
+    background-color: #fbfbfd;
+}
+
+td {
+    padding-inline: 4px;
+    padding-block: 24px;
+}
+
+tr:hover {
+    /* background-color: #F6F6FF; */
+    /* cursor: pointer; */
+    background-color: transparent;
+    cursor: default;
+}

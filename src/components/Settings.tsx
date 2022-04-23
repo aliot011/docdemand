@@ -1,11 +1,13 @@
 import { ButtonUnstyled } from "@mui/base";
-import "../App.css";
+import "../settings.css";
 import ReactSwitch from "react-switch";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
 import axios from "axios";
+import { Modal } from "@mui/material";
+import AddHospital from "./AddHospital";
 
 function getCancelTokenSource() {
   const cancelToken = axios.CancelToken;
@@ -79,23 +81,6 @@ export default function Settings() {
     };
   }, [axios, globalState.state.token]);
 
-  // if (!user)
-  //   axios(getUser)
-  //     .then(function (response: any) {
-  //       // alert(JSON.stringify(`Token: ${globalState.state.token}`));
-  //       setUser(response.data);
-  //       // alert(user);
-  //     })
-  //     .then(function (user: User) {
-  //       setEmailAlerts(user!.alert_preferences.email);
-  //       setTextAlerts(user!.alert_preferences.text);
-  //       setCall(user!.job_preferences.call);
-  //       setShift(user!.job_preferences.shift);
-  //     })
-  //     .catch(function (error: any) {
-  //       console.log(error);
-  //     });
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -112,134 +97,194 @@ export default function Settings() {
     return (
       <div
         style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          flexDirection: "column",
           flex: 1,
         }}
       >
-        <h1>Hello {user.name}</h1>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            flexDirection: "column",
+          }}
+        >
+          <h1
+            style={{
+              margin: 0,
+              fontSize: 32,
+              marginBottom: 12,
+              fontWeight: "700",
+            }}
+          >
+            Alert Settings
+          </h1>
+          <p style={{ color: "#667085", marginBottom: 20 }}>
+            These are jobs that fit your criteria.
+          </p>
+        </div>
         <div style={{ flex: 1 }}>
-          <DashboardSection
-            title="Alert Preferences"
-            content={
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                }}
-              >
-                <table
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    border: "1px solid",
-                    borderRadius: 8,
-                    padding: 12,
-                    marginBottom: 12,
-                  }}
-                >
-                  <thead>
-                    <tr>
-                      <th>Contact Method</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>Email alerts</p>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <ReactSwitch
-                          checked={emailAlerts}
-                          offColor="#6e6e6e"
-                          onColor="#1ee383"
-                          uncheckedIcon={false}
-                          checkedIcon={false}
-                          width={50}
-                          onChange={(checked) => {
-                            setEmailAlerts(checked);
-                          }}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p>Text alerts</p>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <ReactSwitch
-                          checked={textAlerts}
-                          offColor="#6e6e6e"
-                          onColor="#1ee383"
-                          uncheckedIcon={false}
-                          checkedIcon={false}
-                          width={50}
-                          onChange={(checked) => {
-                            setTextAlerts(checked);
-                            // alert("ok");
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
-                <table
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    border: "1px solid",
-                    borderRadius: 8,
-                    padding: 12,
-                    marginBottom: 12,
-                  }}
-                >
-                  <thead>
-                    <tr>
-                      <th>Job Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>Call</p>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <ReactSwitch
-                          checked={user.job_preferences.call}
-                          offColor="#6e6e6e"
-                          onColor="#1ee383"
-                          uncheckedIcon={false}
-                          checkedIcon={false}
-                          width={50}
-                          onChange={(checked) => {
-                            alert("ok");
-                          }}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p>Shift</p>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <ReactSwitch
-                          checked={user.job_preferences.shift}
-                          offColor="#6e6e6e"
-                          onColor="#1ee383"
-                          uncheckedIcon={false}
-                          checkedIcon={false}
-                          width={50}
-                          onChange={(checked) => {
-                            alert("ok");
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            }
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              flexWrap: "wrap",
+            }}
+          >
+            <table
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                borderCollapse: "collapse",
+                borderRadius: 8,
+                padding: 12,
+                marginBottom: 12,
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textAlign: "left",
+                      borderTopLeftRadius: 8,
+                      borderBottomLeftRadius: 8,
+                      background: "#eaeaea",
+                      padding: 8,
+                    }}
+                  >
+                    Contact Method
+                  </th>
+                  <th
+                    style={{
+                      textAlign: "right",
+                      borderTopRightRadius: 8,
+                      borderBottomRightRadius: 8,
+                      background: "#eaeaea",
+                      padding: 8,
+                    }}
+                  >
+                    Active?
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>Email alerts</p>
+                  </td>
+                  <td style={{ textAlign: "right" }}>
+                    <ReactSwitch
+                      checked={emailAlerts}
+                      offColor="#6e6e6e"
+                      onColor="#1ee383"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      width={50}
+                      onChange={(checked) => {
+                        setEmailAlerts(checked);
+                      }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p>Text alerts</p>
+                  </td>
+                  <td style={{ textAlign: "right" }}>
+                    <ReactSwitch
+                      checked={textAlerts}
+                      offColor="#6e6e6e"
+                      onColor="#1ee383"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      width={50}
+                      onChange={(checked) => {
+                        setTextAlerts(checked);
+                        // alert("ok");
+                      }}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
+            <table
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                borderCollapse: "collapse",
+                borderRadius: 8,
+                padding: 12,
+                marginBottom: 12,
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      textAlign: "left",
+                      borderTopLeftRadius: 8,
+                      borderBottomLeftRadius: 8,
+                      background: "#eaeaea",
+                      padding: 8,
+                    }}
+                  >
+                    Job Type
+                  </th>
+                  <th
+                    style={{
+                      textAlign: "right",
+                      borderTopRightRadius: 8,
+                      borderBottomRightRadius: 8,
+                      background: "#eaeaea",
+                      padding: 8,
+                    }}
+                  >
+                    Active?
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>Call</p>
+                  </td>
+                  <td style={{ textAlign: "right" }}>
+                    <ReactSwitch
+                      checked={call}
+                      offColor="#6e6e6e"
+                      onColor="#1ee383"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      width={50}
+                      onChange={(checked) => {
+                        setCall(checked);
+                      }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p>Shift</p>
+                  </td>
+                  <td style={{ textAlign: "right" }}>
+                    <ReactSwitch
+                      checked={shift}
+                      offColor="#6e6e6e"
+                      onColor="#1ee383"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      width={50}
+                      onChange={(checked) => {
+                        setShift(checked);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

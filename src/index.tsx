@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -13,6 +13,7 @@ import DashboardChrome from "./components/DashboardChrome";
 import Settings from "./components/Settings";
 import Profile from "./components/Profile";
 import AuthorizationRequired from "./components/AuthorizationRequired";
+import YourJobs from "./components/YourJobs";
 
 const GlobalStateProvider = getGlobalStateProvider();
 
@@ -27,8 +28,10 @@ ReactDOM.render(
             <Route element={<AuthorizationRequired />}>
               <Route path="provider" element={<DashboardChrome />}>
                 <Route path="listings" element={<JobListings />} />
+                <Route path="jobs" element={<YourJobs />} />
                 <Route path="settings" element={<Settings />} />
-                <Route path="profile" element={<Profile />}>
+                <Route path="profile" element={<Outlet />}>
+                  <Route index element={<Profile />} />
                   <Route path="addhospital" element={<AddHospital />} />
                 </Route>
                 <Route path="" element={<JobListings />} />

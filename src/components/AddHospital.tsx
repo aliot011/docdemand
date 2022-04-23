@@ -32,9 +32,6 @@ export default function AddHospital() {
       style={{
         flex: 1,
         background: "#fff",
-        boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
-        padding: 20,
-        paddingBottom: 300,
       }}
     >
       <div style={{ flex: 1, padding: 24 }}>
@@ -74,7 +71,6 @@ export default function AddHospital() {
             flexDirection: "column",
             marginTop: 12,
             paddingInline: 12,
-            // borderBlock: "1px solid #1e1e1e",
             flex: 1,
           }}
         >

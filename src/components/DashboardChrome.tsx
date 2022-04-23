@@ -50,7 +50,7 @@ export default function Dashboard() {
                 display: "flex",
                 justifyContent: "center",
                 flex: 1,
-                padding: 32,
+                padding: windowWidth > windowTrigger ? 32 : 12,
                 boxShadow: "0px 0px 20px rgba(0,0,0,0.1)",
                 zIndex: 3,
                 borderTopLeftRadius: windowWidth > windowTrigger ? 48 : 0,

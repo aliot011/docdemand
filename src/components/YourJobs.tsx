@@ -1,10 +1,18 @@
 import { ButtonUnstyled } from "@mui/base";
 import "../App.css";
+import ReactSwitch from "react-switch";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
-import { MdChevronRight, MdEvent, MdSchedule } from "react-icons/md";
+import { Link, Modal } from "@mui/material";
+import {
+  MdChevronLeft,
+  MdChevronRight,
+  MdClose,
+  MdEvent,
+  MdSchedule,
+} from "react-icons/md";
 import axios from "axios";
 import { FaSort } from "react-icons/fa";
 
@@ -14,9 +22,12 @@ function getCancelTokenSource() {
   return source;
 }
 
-export default function JobListings() {
+export default function YourJobs() {
   const navigate = useNavigate();
   const globalState = useContext(GlobalStateContext);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [page, setPage] = useState<number>(1);
 
   const [data, setData] = useState([
     {
@@ -40,6 +51,16 @@ export default function JobListings() {
       rate: 150,
     },
   ]);
+
+  const [modalData, setModalData] = useState({
+    id: "",
+    hospital: "",
+    time: {
+      start: new Date(),
+      end: new Date(),
+    },
+    rate: 0,
+  });
 
   const [user, setUser] = useState<User>();
 
@@ -118,6 +139,86 @@ export default function JobListings() {
           flex: 1,
         }}
       >
+        <Modal
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            alignContent: "center",
+            display: "flex",
+            zIndex: 3,
+          }}
+          BackdropProps={{ color: "#fff" }}
+          open={modalVisible}
+          onBackdropClick={() => setModalVisible(!modalVisible)}
+        >
+          <div
+            style={{
+              background: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: 20,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: 20,
+              }}
+            >
+              <p style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
+                {modalData.hospital}
+              </p>
+              <MdClose
+                size={24}
+                onClick={() => setModalVisible(false)}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <li
+              style={{
+                borderRadius: 18,
+                border: "1px solid #efeff4",
+                padding: 20,
+                flexDirection: "column",
+                listStyle: "none",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid #EFEFF4",
+                  paddingBottom: 12,
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 16,
+                    color: "#667085",
+                    fontWeight: 400,
+                    marginRight: 60,
+                  }}
+                >
+                  {modalData.time.start.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
+                </p>
+                {/* <p style={{ fontSize: 12, color: "#667085" }}>
+                  Order ID: {modalData.orderId}
+                </p> */}
+              </div>
+            </li>
+          </div>
+        </Modal>
+
         <div
           style={{
             display: "flex",
@@ -134,11 +235,10 @@ export default function JobListings() {
               fontWeight: "700",
             }}
           >
-            Available Jobs
+            Your Jobs
           </h1>
           <p style={{ color: "#667085" }}>
-            These are jobs at hospitals where you are credentialed that fit your
-            criteria.
+            These are jobs that you have signed up for.
           </p>
         </div>
         {windowWidth < 800 ? (
@@ -236,7 +336,7 @@ export default function JobListings() {
                     })}
                   </p>
                 </div>
-                <ButtonUnstyled
+                {/* <ButtonUnstyled
                   style={{
                     cursor: "pointer",
                     marginTop: 12,
@@ -254,9 +354,9 @@ export default function JobListings() {
                     alignSelf: "flex-end",
                   }}
                 >
-                  <p>CLAIM THIS JOB</p>
+                  <p>CANCEL</p>
                   <MdChevronRight size={20} style={{ marginLeft: 8 }} />
-                </ButtonUnstyled>
+                </ButtonUnstyled> */}
               </div>
             );
           })
