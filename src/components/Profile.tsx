@@ -33,15 +33,17 @@ export default function Profile() {
     hospital_id: [
       {
         id: 1,
-        _Name: "Gottlieb Memorial Hospital",
-        Address: "701 W North Ave, Melrose Park, IL 60160",
-        Phone: "414-234-6369",
+        name: "Gottlieb Memorial Hospital",
+        address: "701 W North Ave, Melrose Park, IL 60160",
+        phone: "414-234-6369",
+        active: true,
       },
       {
         id: 2,
-        _Name: "Gottlieb Memorial Hospital",
-        Address: "701 W North Ave, Melrose Park, IL 60160",
-        Phone: "414-234-6369",
+        name: "Gottlieb Memorial Hospital",
+        address: "701 W North Ave, Melrose Park, IL 60160",
+        phone: "414-234-6369",
+        active: false,
       },
     ],
   });
@@ -124,7 +126,7 @@ export default function Profile() {
                           flex: 1,
                           display: "flex",
                           alignItems: "center",
-                          cursor: "pointer",
+                          // cursor: "pointer",
                           paddingBlock: 24,
                           paddingInline: 12,
                           justifyContent: "space-between",
@@ -135,7 +137,7 @@ export default function Profile() {
                       >
                         <div>
                           <p style={{ fontWeight: "700", marginBottom: 0 }}>
-                            {item._Name}
+                            {item.name}
                           </p>
                           <p
                             style={{
@@ -144,18 +146,16 @@ export default function Profile() {
                               marginTop: 0,
                             }}
                           >
-                            {item.Address}
+                            {item.address}
                           </p>
                         </div>
-                        <ButtonUnstyled
+                        {/* <ButtonUnstyled
                           style={{
-                            // margin: 12,
                             borderRadius: 4,
                             paddingBlock: 4,
                             paddingInline: 12,
                             alignSelf: "flex-start",
                             fontSize: 14,
-                            color: "#fff",
                             fontWeight: "600",
                             border: "0px",
                             background: "#eaeaea",
@@ -163,8 +163,37 @@ export default function Profile() {
                           }}
                           onClick={() => alert("ok")}
                         >
-                          REMOVE HOSPITAL
-                        </ButtonUnstyled>
+                          Remove Hospital
+                        </ButtonUnstyled> */}
+                        <label
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <p
+                            style={{
+                              fontSize: 16,
+                              marginRight: 4,
+                              color:
+                                item.active === true ? "#1ee383" : "#6e6e6e",
+                            }}
+                          >
+                            {item.active === true ? "Active" : "Inactive"}
+                          </p>
+                          <ReactSwitch
+                            checked={item.active}
+                            offColor="#6e6e6e"
+                            onColor="#1ee383"
+                            uncheckedIcon={false}
+                            checkedIcon={false}
+                            width={50}
+                            onChange={(checked) => {
+                              setEmailAlerts(false);
+                            }}
+                          />
+                        </label>
                         {/* <ReactSwitch
                           checked={user.alert_preferences.email}
                           offColor="#6e6e6e"
@@ -181,37 +210,6 @@ export default function Profile() {
                   })}
                 </ul>
               </div>
-            }
-          />
-          <DashboardSection
-            title="Your Information"
-            content={
-              <table>
-                <tr>
-                  <td>
-                    <p>Name</p>
-                  </td>
-                  <td>
-                    <p>{user.name}</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Email</p>
-                  </td>
-                  <td>
-                    <p>{user.email}</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Phone</p>
-                  </td>
-                  <td>
-                    <p>{user.phone}</p>
-                  </td>
-                </tr>
-              </table>
             }
           />
         </div>

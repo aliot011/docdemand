@@ -7,9 +7,15 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../Colors";
 import "../App.css";
-import { FaStethoscope, FaUser } from "react-icons/fa";
+import {
+  FaHospital,
+  FaHospitalAlt,
+  FaHospitalSymbol,
+  FaStethoscope,
+  FaUser,
+} from "react-icons/fa";
 
-export default function DashboardMenu() {
+export default function ProviderMenu() {
   return (
     <>
       <div
@@ -45,7 +51,11 @@ export default function DashboardMenu() {
             link="settings"
             icon={<MdNotificationsActive />}
           />
-          <MenuLink title={"My Profile"} link="profile" icon={<FaUser />} />
+          <MenuLink
+            title={"My Hospitals"}
+            link="profile"
+            icon={<FaHospitalSymbol />}
+          />
         </div>
         <div
           style={{

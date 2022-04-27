@@ -92,202 +92,202 @@ export default function Settings() {
     setWindowWidth(window.innerWidth);
   };
 
-  if (!user) return <p>Loading...</p>;
-  else
-    return (
+  // if (!user) return <p>Loading...</p>;
+  // else
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-start",
+        flexDirection: "column",
+        flex: 1,
+      }}
+    >
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-start",
+          alignItems: "flex-start",
           flexDirection: "column",
-          flex: 1,
         }}
       >
+        <h1
+          style={{
+            margin: 0,
+            fontSize: 32,
+            marginBottom: 12,
+            fontWeight: "700",
+          }}
+        >
+          Alert Settings
+        </h1>
+        <p style={{ color: "#667085", marginBottom: 20 }}>
+          These are jobs that fit your criteria.
+        </p>
+      </div>
+      <div style={{ flex: 1 }}>
         <div
           style={{
             display: "flex",
-            alignItems: "flex-start",
             flexDirection: "column",
+            flexWrap: "wrap",
           }}
         >
-          <h1
+          <table
             style={{
-              margin: 0,
-              fontSize: 32,
-              marginBottom: 12,
-              fontWeight: "700",
-            }}
-          >
-            Alert Settings
-          </h1>
-          <p style={{ color: "#667085", marginBottom: 20 }}>
-            These are jobs that fit your criteria.
-          </p>
-        </div>
-        <div style={{ flex: 1 }}>
-          <div
-            style={{
-              display: "flex",
+              flex: 1,
               flexDirection: "column",
-              flexWrap: "wrap",
+              borderCollapse: "collapse",
+              borderRadius: 8,
+              padding: 12,
+              marginBottom: 12,
             }}
           >
-            <table
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                borderCollapse: "collapse",
-                borderRadius: 8,
-                padding: 12,
-                marginBottom: 12,
-              }}
-            >
-              <thead>
-                <tr>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      borderTopLeftRadius: 8,
-                      borderBottomLeftRadius: 8,
-                      background: "#eaeaea",
-                      padding: 8,
+            <thead>
+              <tr>
+                <th
+                  style={{
+                    textAlign: "left",
+                    borderTopLeftRadius: 8,
+                    borderBottomLeftRadius: 8,
+                    background: "#eaeaea",
+                    padding: 8,
+                  }}
+                >
+                  Contact Method
+                </th>
+                <th
+                  style={{
+                    textAlign: "right",
+                    borderTopRightRadius: 8,
+                    borderBottomRightRadius: 8,
+                    background: "#eaeaea",
+                    padding: 8,
+                  }}
+                >
+                  Active?
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>Email alerts</p>
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  <ReactSwitch
+                    checked={emailAlerts}
+                    offColor="#6e6e6e"
+                    onColor="#1ee383"
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    width={50}
+                    onChange={(checked) => {
+                      setEmailAlerts(checked);
                     }}
-                  >
-                    Contact Method
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "right",
-                      borderTopRightRadius: 8,
-                      borderBottomRightRadius: 8,
-                      background: "#eaeaea",
-                      padding: 8,
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>Text alerts</p>
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  <ReactSwitch
+                    checked={textAlerts}
+                    offColor="#6e6e6e"
+                    onColor="#1ee383"
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    width={50}
+                    onChange={(checked) => {
+                      setTextAlerts(checked);
+                      // alert("ok");
                     }}
-                  >
-                    Active?
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <p>Email alerts</p>
-                  </td>
-                  <td style={{ textAlign: "right" }}>
-                    <ReactSwitch
-                      checked={emailAlerts}
-                      offColor="#6e6e6e"
-                      onColor="#1ee383"
-                      uncheckedIcon={false}
-                      checkedIcon={false}
-                      width={50}
-                      onChange={(checked) => {
-                        setEmailAlerts(checked);
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Text alerts</p>
-                  </td>
-                  <td style={{ textAlign: "right" }}>
-                    <ReactSwitch
-                      checked={textAlerts}
-                      offColor="#6e6e6e"
-                      onColor="#1ee383"
-                      uncheckedIcon={false}
-                      checkedIcon={false}
-                      width={50}
-                      onChange={(checked) => {
-                        setTextAlerts(checked);
-                        // alert("ok");
-                      }}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
-            <table
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                borderCollapse: "collapse",
-                borderRadius: 8,
-                padding: 12,
-                marginBottom: 12,
-              }}
-            >
-              <thead>
-                <tr>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      borderTopLeftRadius: 8,
-                      borderBottomLeftRadius: 8,
-                      background: "#eaeaea",
-                      padding: 8,
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
+          <table
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              borderCollapse: "collapse",
+              borderRadius: 8,
+              padding: 12,
+              marginBottom: 12,
+            }}
+          >
+            <thead>
+              <tr>
+                <th
+                  style={{
+                    textAlign: "left",
+                    borderTopLeftRadius: 8,
+                    borderBottomLeftRadius: 8,
+                    background: "#eaeaea",
+                    padding: 8,
+                  }}
+                >
+                  Job Type
+                </th>
+                <th
+                  style={{
+                    textAlign: "right",
+                    borderTopRightRadius: 8,
+                    borderBottomRightRadius: 8,
+                    background: "#eaeaea",
+                    padding: 8,
+                  }}
+                >
+                  Active?
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>Call</p>
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  <ReactSwitch
+                    checked={call}
+                    offColor="#6e6e6e"
+                    onColor="#1ee383"
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    width={50}
+                    onChange={(checked) => {
+                      setCall(checked);
                     }}
-                  >
-                    Job Type
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "right",
-                      borderTopRightRadius: 8,
-                      borderBottomRightRadius: 8,
-                      background: "#eaeaea",
-                      padding: 8,
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>Shift</p>
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  <ReactSwitch
+                    checked={shift}
+                    offColor="#6e6e6e"
+                    onColor="#1ee383"
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    width={50}
+                    onChange={(checked) => {
+                      setShift(checked);
                     }}
-                  >
-                    Active?
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <p>Call</p>
-                  </td>
-                  <td style={{ textAlign: "right" }}>
-                    <ReactSwitch
-                      checked={call}
-                      offColor="#6e6e6e"
-                      onColor="#1ee383"
-                      uncheckedIcon={false}
-                      checkedIcon={false}
-                      width={50}
-                      onChange={(checked) => {
-                        setCall(checked);
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Shift</p>
-                  </td>
-                  <td style={{ textAlign: "right" }}>
-                    <ReactSwitch
-                      checked={shift}
-                      offColor="#6e6e6e"
-                      onColor="#1ee383"
-                      uncheckedIcon={false}
-                      checkedIcon={false}
-                      width={50}
-                      onChange={(checked) => {
-                        setShift(checked);
-                      }}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 function DashboardSection(props: {

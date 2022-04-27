@@ -1,0 +1,15 @@
+th {
+    padding: 4px;
+    background-color: #fbfbfd;
+}
+
+td {
+    padding-inline: 4px;
+    padding-block: 24px;
+    font-size: 14px;
+}
+
+tr:hover {
+    background-color: #F6F6FF;
+    cursor: pointer;
+}

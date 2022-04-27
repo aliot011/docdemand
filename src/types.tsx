@@ -13,9 +13,10 @@ export type User =
 
 export type hospital_id = {
   id: number;
-  _Name: string;
-  Address: string;
-  Phone: string;
+  name: string;
+  address: string;
+  phone: string;
+  active: boolean;
 };
 
 export type alert_preferences = { email: boolean; text: boolean };

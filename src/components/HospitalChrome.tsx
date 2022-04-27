@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import DashboardMenu from "./DashboardMenu";
+import ProviderMenu from "./ProviderMenu";
 // import Footer from "./Footer";
 import Header from "./Header";
+import HospitalMenu from "./HospitalMenu";
 
-export default function Dashboard() {
+export default function HospitalChrome() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function Dashboard() {
               flexDirection: "row",
             }}
           >
-            {windowWidth > windowTrigger ? <DashboardMenu /> : null}
+            {windowWidth > windowTrigger ? <HospitalMenu /> : null}
             <div
               style={{
                 display: "flex",

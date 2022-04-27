@@ -90,7 +90,7 @@ export default function Signup() {
           flexDirection: "column",
         }}
       >
-        <h3 style={{ marginBottom: 24 }}>Sign up for DocDemand</h3>
+        <h3 style={{ marginBottom: 24 }}>Sign up for Pagerr</h3>
         <label>
           Full Name:
           <input

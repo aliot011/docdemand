@@ -110,7 +110,7 @@ export default function Login() {
           flexDirection: "column",
         }}
       >
-        <h3 style={{ marginBottom: 24 }}>Login to DocDemand</h3>
+        <h3 style={{ marginBottom: 24 }}>Login to Pagerr</h3>
         <label>
           Email:
           <input type="text" onChange={(evt) => setEmail(evt.target.value)} />

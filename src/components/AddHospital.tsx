@@ -94,12 +94,12 @@ export default function AddHospital() {
                   >
                     <div>
                       <p style={{ fontWeight: "700", marginBottom: 0 }}>
-                        {item._Name}
+                        {item.name}
                       </p>
                       <p
                         style={{ fontSize: 12, fontWeight: 500, marginTop: 0 }}
                       >
-                        {item.Address}
+                        {item.address}
                       </p>
                     </div>
                     <MdAddCircle color={"lightgreen"} size={24} />

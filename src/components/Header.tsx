@@ -4,7 +4,8 @@ import { FaStethoscope } from "react-icons/fa";
 import { MdClose, MdOutlineMenu } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import DashboardMenu from "./DashboardMenu";
+import ProfileDrawer from "./HospitalDrawer";
+import ProviderMenu from "./ProviderMenu";
 
 export default function Header(props: { windowTrigger: number }) {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ export default function Header(props: { windowTrigger: number }) {
             </div>
             <h2 style={{ color: "purple", fontSize: 28 }}>Pagerr</h2>
           </div>
-          <DashboardMenu />
+          <ProviderMenu />
         </div>
       </Drawer>
 
@@ -134,6 +135,7 @@ export default function Header(props: { windowTrigger: number }) {
             <h4 style={{ color: "black", margin: 0 }}>Log Out</h4>
           </Link>
         )}
+        <ProfileDrawer />
       </div>
     </>
   );
