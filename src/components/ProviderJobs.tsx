@@ -4,14 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
+import { Modal } from "@mui/material";
 import {
   MdChevronRight,
+  MdClose,
   MdEvent,
-  MdFireplace,
+  MdMonetizationOn,
+  MdOutlineMonetizationOn,
   MdSchedule,
 } from "react-icons/md";
 import axios from "axios";
-import { FaDumpsterFire, FaFire, FaSort, FaStethoscope } from "react-icons/fa";
+import { FaSort } from "react-icons/fa";
 
 function getCancelTokenSource() {
   const cancelToken = axios.CancelToken;
@@ -19,9 +22,12 @@ function getCancelTokenSource() {
   return source;
 }
 
-export default function JobListings() {
+export default function YourJobs() {
   const navigate = useNavigate();
   const globalState = useContext(GlobalStateContext);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [page, setPage] = useState<number>(1);
 
   const [data, setData] = useState([
     {
@@ -66,6 +72,27 @@ export default function JobListings() {
       certifications: [{ id: 1, label: "Board Certified" }],
     },
   ]);
+
+  const [modalData, setModalData] = useState({
+    id: "0001111",
+    hospital: "Gottlieb Memorial Hospital",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    created: new Date(),
+    type: "Shift",
+    open: true,
+    time: {
+      start: new Date("7/6/2022"),
+      end: new Date("7/7/2022"),
+    },
+    rate: 150,
+    providerType: [{ id: 2, label: "CRNA" }],
+    specialties: [
+      { id: 1, label: "General Anesthesia" },
+      { id: 10, label: "Pediatric (5-18 years old)" },
+    ],
+    certifications: [{ id: 2, label: "Board Eligible" }],
+  });
 
   const [user, setUser] = useState<User>();
 
@@ -144,6 +171,274 @@ export default function JobListings() {
         flex: 1,
       }}
     >
+      <Modal
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          alignContent: "center",
+          display: "flex",
+          zIndex: 3,
+          maxWidth: 480,
+          alignSelf: "center",
+        }}
+        BackdropProps={{ color: "#fff" }}
+        open={modalVisible}
+        onBackdropClick={() => setModalVisible(!modalVisible)}
+      >
+        <div
+          style={{
+            background: "#fff",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: 20,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: 20,
+            }}
+          >
+            <p style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
+              {modalData.type} at {modalData.hospital}
+            </p>
+            <MdClose
+              size={24}
+              onClick={() => setModalVisible(false)}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+          <div
+            style={{
+              borderRadius: 18,
+              border: "1px solid #efeff4",
+              padding: 20,
+              flexDirection: "column",
+              listStyle: "none",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    color: "#00b0f0",
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <MdMonetizationOn size={24} />
+                  <p
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 700,
+                    }}
+                  >
+                    ${modalData.rate}/hr
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "space-between",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      margin: 4,
+                      background: "#eaeaea",
+                      paddingBlock: 4,
+                      paddingInline: 8,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <MdEvent size={18} style={{ marginRight: 4 }} />
+                    <p style={{ fontSize: 16, fontWeight: 500 }}>
+                      {new Date(modalData.time.start).toLocaleString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        weekday: "short",
+                      })}
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      margin: 4,
+                      background: "#eaeaea",
+                      paddingBlock: 4,
+                      paddingInline: 8,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <MdSchedule size={18} style={{ marginRight: 4 }} />
+                    <p style={{ fontSize: 16, fontWeight: 500 }}>
+                      {new Date(modalData.time.start).toLocaleTimeString(
+                        "en-US",
+                        {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        }
+                      )}
+                      {" to "}
+                      {new Date(modalData.time.end).toLocaleTimeString(
+                        "en-US",
+                        {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        }
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{ height: 1, background: "#eaeaea", marginBlock: 12 }}
+              />
+              <p style={{ marginBottom: 12 }}>{modalData.description}</p>
+              <div style={{ marginBottom: 12 }}>
+                <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
+                  Provider Type
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {modalData.providerType.map(function (item) {
+                    return (
+                      <div
+                        style={{
+                          background: "#eaeaea",
+                          paddingBlock: 4,
+                          paddingInline: 12,
+                          borderRadius: 40,
+                          margin: 2,
+                        }}
+                      >
+                        <p style={{ fontWeight: 500, maxLines: 1 }}>
+                          {item.label}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div style={{ marginBottom: 12 }}>
+                <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
+                  Specialty Requirements
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {modalData.specialties.map(function (item) {
+                    return (
+                      <div
+                        style={{
+                          background: "#eaeaea",
+                          paddingBlock: 4,
+                          paddingInline: 12,
+                          borderRadius: 40,
+                          margin: 2,
+                        }}
+                      >
+                        <p style={{ fontWeight: 500, maxLines: 1 }}>
+                          {item.label}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div style={{ marginBottom: 12 }}>
+                <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
+                  Certification Requirements
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {modalData.certifications.map(function (item) {
+                    return (
+                      <div
+                        style={{
+                          background: "#eaeaea",
+                          paddingBlock: 4,
+                          paddingInline: 12,
+                          borderRadius: 40,
+                          margin: 2,
+                        }}
+                      >
+                        <p style={{ fontWeight: 500, maxLines: 1 }}>
+                          {item.label}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignSelf: "flex-end",
+                }}
+              >
+                <ButtonUnstyled
+                  style={{
+                    cursor: "pointer",
+                    marginTop: 4,
+                    border: "0px",
+                    borderRadius: 4,
+                    paddingBlock: 4,
+                    paddingLeft: 12,
+                    background: "#9e9e9e",
+                    color: "#fff",
+                    fontWeight: 600,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p>CANCEL JOB</p>
+                  <MdChevronRight size={20} style={{ marginLeft: 8 }} />
+                </ButtonUnstyled>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
       <div
         style={{
           display: "flex",
@@ -160,10 +455,10 @@ export default function JobListings() {
             fontWeight: "700",
           }}
         >
-          Available Jobs
+          Your Jobs
         </h1>
         <p style={{ color: "#667085" }}>
-          These are open jobs that fit your criteria.
+          These are jobs that you have signed up for.
         </p>
       </div>
       {windowWidth < 800 ? (
@@ -353,27 +648,6 @@ export default function JobListings() {
                   })}
                 </div>
               </div>
-              <ButtonUnstyled
-                style={{
-                  cursor: "pointer",
-                  marginTop: 12,
-                  border: "0px",
-                  borderRadius: 4,
-                  paddingBlock: 4,
-                  paddingLeft: 12,
-                  background: "#00b0f0",
-                  color: "#fff",
-                  fontWeight: 600,
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  alignSelf: "flex-end",
-                }}
-              >
-                <p>CLAIM THIS JOB</p>
-                <MdChevronRight size={20} style={{ marginLeft: 8 }} />
-              </ButtonUnstyled>
             </div>
           );
         })
@@ -391,8 +665,7 @@ export default function JobListings() {
                   borderTopLeftRadius: 8,
                   borderBottomLeftRadius: 8,
                 }}
-              />
-              <th>
+              >
                 <ButtonUnstyled style={filterButtonStyle}>
                   <p>Location</p> <FaSort style={{ marginLeft: 4 }} />
                 </ButtonUnstyled>
@@ -409,26 +682,11 @@ export default function JobListings() {
                   <p>Compensation</p> <FaSort style={{ marginLeft: 4 }} />
                 </ButtonUnstyled>
               </th>
-              <th
-                style={{
-                  borderTopRightRadius: 8,
-                  borderBottomRightRadius: 8,
-                }}
-              >
+              <th>
                 <ButtonUnstyled style={filterButtonStyle}>
                   <p>Job Type</p> <FaSort style={{ marginLeft: 4 }} />
                 </ButtonUnstyled>
               </th>
-              {/* <th
-                style={{
-                  borderTopRightRadius: 8,
-                  borderBottomRightRadius: 8,
-                }}
-              >
-                <ButtonUnstyled style={filterButtonStyle}>
-                  <p>Requirements</p> <FaSort style={{ marginLeft: 4 }} />
-                </ButtonUnstyled>
-              </th> */}
               <th
                 style={{
                   borderTopRightRadius: 8,
@@ -447,9 +705,6 @@ export default function JobListings() {
                     textAlign: "left",
                   }}
                 >
-                  <td>
-                    <FaFire color="orange" size={24} />
-                  </td>
                   <td>{item.hospital}</td>
                   <td>
                     {new Date(item.time.start).toLocaleString([], {
@@ -488,9 +743,12 @@ export default function JobListings() {
                         flexDirection: "row",
                         alignItems: "center",
                       }}
-                      onClick={() => navigate("detail")}
+                      onClick={() => {
+                        setModalData(item);
+                        setModalVisible(true);
+                      }}
                     >
-                      <p style={{ maxLines: 1, flexShrink: 0 }}>DETAILS</p>
+                      <p>DETAILS</p>
                       <MdChevronRight size={20} style={{ marginLeft: 8 }} />
                     </ButtonUnstyled>
                   </td>

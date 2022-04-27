@@ -12,12 +12,13 @@ import { getGlobalStateProvider } from "./contexts/GlobalStateContext";
 import Settings from "./components/Settings";
 import Profile from "./components/Profile";
 import AuthorizationRequired from "./components/AuthorizationRequired";
-import YourJobs from "./components/YourJobs";
+import YourJobs from "./components/ProviderJobs";
 import HospitalJobListings from "./components/HospitalJobListings";
 import AddListing from "./components/AddListing";
 import HospitalChrome from "./components/HospitalChrome";
 import ProviderChrome from "./components/ProviderChrome";
 import ProviderJobDetails from "./components/ProviderJobDetails";
+import HospitalPastJobs from "./components/HospitalPastJobs";
 
 const GlobalStateProvider = getGlobalStateProvider();
 
@@ -45,8 +46,12 @@ ReactDOM.render(
             <Route path="addhospital" element={<AddHospital />} />
             {/* </Route> */}
             <Route path="hospital" element={<HospitalChrome />}>
-              <Route path="listings" element={<HospitalJobListings />} />
+              <Route path="listings" element={<Outlet />}>
+                <Route index element={<HospitalJobListings />} />
+                <Route path="addlisting" element={<AddListing />} />
+              </Route>
               <Route path="addlisting" element={<AddListing />} />
+              <Route path="jobs" element={<HospitalPastJobs />} />
               <Route path="" element={<HospitalJobListings />} />
               <Route index element={<HospitalJobListings />} />
             </Route>

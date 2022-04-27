@@ -82,12 +82,15 @@ th {
 td {
   padding-inline: 4px;
   padding-block: 24px;
+  font-size: 14px;
 }
 
-tr:hover {
+
+/* tr:hover {
   background-color: #F6F6FF;
   cursor: pointer;
-}
+} */
+
 /* th {
   display: flexbox;
   flex-direction: row;

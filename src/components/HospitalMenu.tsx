@@ -1,13 +1,9 @@
 import { Link } from "@mui/material";
-import {
-  MdEventNote,
-  MdNotificationsActive,
-  MdWorkspaces,
-} from "react-icons/md";
+import { MdEventNote, MdWorkspaces } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../Colors";
 import "../App.css";
-import { FaStethoscope, FaUser } from "react-icons/fa";
+import { FaStethoscope } from "react-icons/fa";
 
 export default function ProviderMenu() {
   return (
@@ -20,13 +16,13 @@ export default function ProviderMenu() {
           zIndex: 1,
         }}
       >
-        <div
+        {/* <div
           style={{
             height: 2,
             background: "#EFEFF4",
             marginBottom: 20,
           }}
-        />
+        /> */}
         <div
           style={{
             display: "flex",
@@ -90,7 +86,7 @@ function MenuLink(props: { title: string; link?: string; icon: any }) {
         padding: 12,
         marginBlock: 8,
         background:
-          path === `/provider/${props.link}`
+          path === `/hospital/${props.link}`
             ? `${Colors.blueBrightPrimary}`
             : "transparent",
         fontWeight: 400,
@@ -101,7 +97,7 @@ function MenuLink(props: { title: string; link?: string; icon: any }) {
         color:
           props.link === undefined
             ? "rgba(102, 112, 133, 0.4)"
-            : path === `/provider/${props.link}`
+            : path === `/hospital/${props.link}`
             ? `${Colors.bluePrimary}`
             : "#667085",
         fontSize: 16,

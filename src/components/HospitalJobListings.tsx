@@ -1,16 +1,11 @@
 import { ButtonUnstyled } from "@mui/base";
-// import "../App.css";
-import "../styles/ListStyle.css";
+import "../App.css";
+// import "../styles/ListStyle.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
-import {
-  MdChevronRight,
-  MdEvent,
-  MdOutlineMonetizationOn,
-  MdSchedule,
-} from "react-icons/md";
+import { MdChevronRight, MdEvent, MdSchedule } from "react-icons/md";
 import axios from "axios";
 import { FaSort } from "react-icons/fa";
 import { Link } from "@mui/material";
@@ -21,7 +16,7 @@ function getCancelTokenSource() {
   return source;
 }
 
-export default function JobListings() {
+export default function HospitalJobListings() {
   const navigate = useNavigate();
   const globalState = useContext(GlobalStateContext);
 
@@ -71,10 +66,10 @@ export default function JobListings() {
 
   const [user, setUser] = useState<User>();
 
-  const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
-  const [textAlerts, setTextAlerts] = useState<boolean>(false);
-  const [call, setCall] = useState<boolean>(false);
-  const [shift, setShift] = useState<boolean>(false);
+  // const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
+  // const [textAlerts, setTextAlerts] = useState<boolean>(false);
+  // const [call, setCall] = useState<boolean>(false);
+  // const [shift, setShift] = useState<boolean>(false);
 
   // useEffect(() => {
   //   const cancelTokenSource = getCancelTokenSource();
@@ -551,6 +546,7 @@ export default function JobListings() {
                         display: "flex",
                         justifyContent: "flex-end",
                       }}
+                      onClick={() => navigate("addlisting")}
                     >
                       <p>Modify Job</p>
                       <MdChevronRight size={20} />

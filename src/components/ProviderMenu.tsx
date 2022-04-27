@@ -7,13 +7,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../Colors";
 import "../App.css";
-import {
-  FaHospital,
-  FaHospitalAlt,
-  FaHospitalSymbol,
-  FaStethoscope,
-  FaUser,
-} from "react-icons/fa";
+import { FaHospitalSymbol, FaStethoscope } from "react-icons/fa";
 
 export default function ProviderMenu() {
   return (
@@ -26,13 +20,13 @@ export default function ProviderMenu() {
           zIndex: 1,
         }}
       >
-        <div
+        {/* <div
           style={{
             height: 2,
             background: "#EFEFF4",
             marginBottom: 20,
           }}
-        />
+        /> */}
         <div
           style={{
             display: "flex",

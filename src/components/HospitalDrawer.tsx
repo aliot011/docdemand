@@ -58,7 +58,7 @@ export default function ProfileDrawer() {
       <Drawer anchor="right" open={profileOpen}>
         <div
           style={{
-            width: 280,
+            // width: 280,
             padding: 10,
             display: "flex",
             flexDirection: "column",
@@ -81,7 +81,7 @@ export default function ProfileDrawer() {
                 color: Colors.bluePrimary,
               }}
             >
-              Settings
+              Profile
             </p>
             <MdClose
               size={22}

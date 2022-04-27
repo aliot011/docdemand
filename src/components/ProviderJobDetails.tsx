@@ -109,7 +109,14 @@ export default function AddListing() {
           </div>
         </div>
         <div style={{ height: 1, background: "#eaeaea", margin: 16 }} />
-        <form style={{ margin: 12, display: "flex", flexDirection: "column" }}>
+        <form
+          style={{
+            margin: 12,
+            display: "flex",
+            flexDirection: "column",
+            fontSize: 14,
+          }}
+        >
           <p style={{ marginBottom: 20 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

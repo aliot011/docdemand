@@ -1,5 +1,5 @@
 import { ButtonUnstyled } from "@mui/base";
-import "../settings.css";
+import "../styles/Settings.css";
 import ReactSwitch from "react-switch";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
@@ -8,6 +8,7 @@ import type { User } from "../types";
 import axios from "axios";
 import { Modal } from "@mui/material";
 import AddHospital from "./AddHospital";
+import { strictEqual } from "assert";
 
 function getCancelTokenSource() {
   const cancelToken = axios.CancelToken;
@@ -29,10 +30,68 @@ export default function Settings() {
 
   const [user, setUser] = useState<User>();
 
-  const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
-  const [textAlerts, setTextAlerts] = useState<boolean>(false);
-  const [call, setCall] = useState<boolean>(false);
-  const [shift, setShift] = useState<boolean>(false);
+  const [data, setData] = useState([
+    {
+      id: 1,
+      label: "Contact Methods",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+      options: [
+        {
+          label: "Email",
+          active: true,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        },
+        {
+          label: "Text",
+          active: true,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        },
+      ],
+    },
+    {
+      id: 2,
+      label: "Job Types",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+      options: [
+        {
+          label: "Call",
+          active: false,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        },
+        {
+          label: "Shift",
+          active: true,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        },
+      ],
+    },
+    {
+      id: 3,
+      label: "Location Types",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+      options: [
+        {
+          label: "Hospital",
+          active: false,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        },
+        {
+          label: "Surgery Center",
+          active: true,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        },
+      ],
+    },
+  ]);
 
   useEffect(() => {
     const cancelTokenSource = getCancelTokenSource();
@@ -47,10 +106,10 @@ export default function Settings() {
     })
       .then(function (response: any) {
         setUser(response.data);
-        setEmailAlerts(response.data!.alert_preferences.email);
-        setTextAlerts(response.data!.alert_preferences.text);
-        setCall(response.data!.job_preferences.call);
-        setShift(response.data!.job_preferences.shift);
+        // setEmailAlerts(response.data!.alert_preferences.email);
+        // setTextAlerts(response.data!.alert_preferences.text);
+        // setCall(response.data!.job_preferences.call);
+        // setShift(response.data!.job_preferences.shift);
       })
       .catch(function (error: any) {
         if (axios.isCancel(error)) {
@@ -121,216 +180,84 @@ export default function Settings() {
           Alert Settings
         </h1>
         <p style={{ color: "#667085", marginBottom: 20 }}>
-          These are jobs that fit your criteria.
+          Let us know when you want to be alerted of a new job listing.
         </p>
       </div>
-      <div style={{ flex: 1 }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "wrap",
-          }}
-        >
-          <table
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              borderCollapse: "collapse",
-              borderRadius: 8,
-              padding: 12,
-              marginBottom: 12,
-            }}
-          >
-            <thead>
-              <tr>
-                <th
-                  style={{
-                    textAlign: "left",
-                    borderTopLeftRadius: 8,
-                    borderBottomLeftRadius: 8,
-                    background: "#eaeaea",
-                    padding: 8,
-                  }}
-                >
-                  Contact Method
-                </th>
-                <th
-                  style={{
-                    textAlign: "right",
-                    borderTopRightRadius: 8,
-                    borderBottomRightRadius: 8,
-                    background: "#eaeaea",
-                    padding: 8,
-                  }}
-                >
-                  Active?
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p>Email alerts</p>
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <ReactSwitch
-                    checked={emailAlerts}
-                    offColor="#6e6e6e"
-                    onColor="#1ee383"
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    width={50}
-                    onChange={(checked) => {
-                      setEmailAlerts(checked);
-                    }}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>Text alerts</p>
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <ReactSwitch
-                    checked={textAlerts}
-                    offColor="#6e6e6e"
-                    onColor="#1ee383"
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    width={50}
-                    onChange={(checked) => {
-                      setTextAlerts(checked);
-                      // alert("ok");
-                    }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          {windowWidth > 400 ? <div style={{ width: 12 }} /> : null}
-          <table
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              borderCollapse: "collapse",
-              borderRadius: 8,
-              padding: 12,
-              marginBottom: 12,
-            }}
-          >
-            <thead>
-              <tr>
-                <th
-                  style={{
-                    textAlign: "left",
-                    borderTopLeftRadius: 8,
-                    borderBottomLeftRadius: 8,
-                    background: "#eaeaea",
-                    padding: 8,
-                  }}
-                >
-                  Job Type
-                </th>
-                <th
-                  style={{
-                    textAlign: "right",
-                    borderTopRightRadius: 8,
-                    borderBottomRightRadius: 8,
-                    background: "#eaeaea",
-                    padding: 8,
-                  }}
-                >
-                  Active?
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p>Call</p>
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <ReactSwitch
-                    checked={call}
-                    offColor="#6e6e6e"
-                    onColor="#1ee383"
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    width={50}
-                    onChange={(checked) => {
-                      setCall(checked);
-                    }}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>Shift</p>
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <ReactSwitch
-                    checked={shift}
-                    offColor="#6e6e6e"
-                    onColor="#1ee383"
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    width={50}
-                    onChange={(checked) => {
-                      setShift(checked);
-                    }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DashboardSection(props: {
-  title: string;
-  button?: boolean;
-  buttonTitle?: string;
-  handleButton?: any;
-  content?: any;
-}) {
-  return (
-    <div>
       <div
         style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: 28,
+          border: "1px solid #eaeaea",
+          borderRadius: 16,
+          paddingInline: 12,
+          borderCollapse: "collapse",
         }}
       >
-        <h2 style={{ marginBottom: 16 }}>{props.title}</h2>
-        {props.button === undefined || false ? null : (
-          <ButtonUnstyled
-            style={{
-              margin: 12,
-              borderRadius: 4,
-              padding: 12,
-              alignSelf: "flex-start",
-              fontSize: 14,
-              color: "#fff",
-              fontWeight: "600",
-              border: "0px",
-              background: "#00b0f0",
-              cursor: "pointer",
-            }}
-            onClick={props.handleButton}
-          >
-            {props.buttonTitle}
-          </ButtonUnstyled>
-        )}
+        <table>
+          {data.map(function (item, index) {
+            return (
+              <tr>
+                <td
+                  style={{
+                    alignItems: "flex-start",
+                    width: "40%",
+                    borderCollapse: "collapse",
+                    borderBottom:
+                      index + 1 === data.length
+                        ? undefined
+                        : "1px solid #eaeaea",
+                  }}
+                >
+                  <div>
+                    <p style={{ fontSize: 20, fontWeight: 600 }}>
+                      {item.label}
+                    </p>
+                    <p style={{ color: "#667085", marginBottom: 32 }}>
+                      {item.description}
+                    </p>
+                  </div>
+                </td>
+                <td
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    display: "flex",
+                    borderBottom:
+                      index + 1 === data.length
+                        ? undefined
+                        : "1px solid #eaeaea",
+                  }}
+                >
+                  {item.options.map(function (i) {
+                    return (
+                      <label
+                        style={{
+                          fontSize: 16,
+                          display: "flex",
+                          flexDirection: "row",
+                          marginTop: 16,
+                        }}
+                      >
+                        <input type="checkbox" style={{ marginRight: 8 }} />
+                        <div>
+                          <p>{i.label}</p>
+                          <p
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 12,
+                              color: "#667085",
+                            }}
+                          >
+                            {item.description}
+                          </p>
+                        </div>
+                      </label>
+                    );
+                  })}
+                </td>
+              </tr>
+            );
+          })}
+        </table>
       </div>
-      <div>{props.content}</div>
     </div>
   );
 }

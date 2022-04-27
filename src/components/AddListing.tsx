@@ -176,7 +176,17 @@ export default function AddListing() {
             })}
           </DetailContainer>
           <DetailContainer label="Description">
-            <textarea rows={4} />
+            <textarea
+              rows={4}
+              style={{
+                border: "none",
+                background: "#eaeaea",
+                padding: 8,
+                fontSize: 16,
+                borderRadius: 8,
+                marginBlock: 4,
+              }}
+            />
           </DetailContainer>
           <div
             style={{

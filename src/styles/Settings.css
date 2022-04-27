@@ -1,0 +1,18 @@
+
+label {
+    flex-direction: column;
+    display: flex;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 8px;
+}
+
+th {
+    padding: 4px;
+    background-color: #F6F6FF;
+}
+
+td {
+    padding: 12px;
+    font-size: 15px 
+    }
