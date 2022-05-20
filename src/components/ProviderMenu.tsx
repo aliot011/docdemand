@@ -46,7 +46,7 @@ export default function ProviderMenu() {
             icon={<MdNotificationsActive />}
           />
           <MenuLink
-            title={"My Hospitals"}
+            title={"My Facilities"}
             link="profile"
             icon={<FaHospitalSymbol />}
           />

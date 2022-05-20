@@ -135,7 +135,10 @@ export default function Login() {
             background: "#00b0f0",
             cursor: "pointer",
           }}
-          onClick={() => login()}
+          onClick={() =>
+            // login()
+            navigate("/provider/listings")
+          }
         >
           Login
         </ButtonUnstyled>

@@ -34,28 +34,26 @@ export default function Settings() {
     {
       id: 1,
       label: "Contact Methods",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+      description: "How do you want us to contact you when a new job appears?",
       options: [
         {
           label: "Email",
           active: true,
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+            "We will send a message to the email you used to sign up to Pagerr when a new job appears.",
         },
         {
           label: "Text",
           active: true,
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+            "We will send a text message to the phone number you used to sign up to Pagerr when a new job appears..",
         },
       ],
     },
     {
       id: 2,
       label: "Job Types",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+      description: "What kind of job types do you want to be alerted about?",
       options: [
         {
           label: "Call",
@@ -75,7 +73,7 @@ export default function Settings() {
       id: 3,
       label: "Location Types",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        "What kind of facilities do you want to be notified about when a new job is posted?",
       options: [
         {
           label: "Hospital",
@@ -187,76 +185,71 @@ export default function Settings() {
         style={{
           border: "1px solid #eaeaea",
           borderRadius: 16,
-          paddingInline: 12,
-          borderCollapse: "collapse",
         }}
       >
-        <table>
-          {data.map(function (item, index) {
-            return (
-              <tr>
-                <td
-                  style={{
-                    alignItems: "flex-start",
-                    width: "40%",
-                    borderCollapse: "collapse",
-                    borderBottom:
-                      index + 1 === data.length
-                        ? undefined
-                        : "1px solid #eaeaea",
-                  }}
-                >
-                  <div>
-                    <p style={{ fontSize: 20, fontWeight: 600 }}>
-                      {item.label}
-                    </p>
-                    <p style={{ color: "#667085", marginBottom: 32 }}>
-                      {item.description}
-                    </p>
-                  </div>
-                </td>
-                <td
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    display: "flex",
-                    borderBottom:
-                      index + 1 === data.length
-                        ? undefined
-                        : "1px solid #eaeaea",
-                  }}
-                >
-                  {item.options.map(function (i) {
-                    return (
-                      <label
-                        style={{
-                          fontSize: 16,
-                          display: "flex",
-                          flexDirection: "row",
-                          marginTop: 16,
-                        }}
-                      >
-                        <input type="checkbox" style={{ marginRight: 8 }} />
-                        <div>
-                          <p>{i.label}</p>
-                          <p
-                            style={{
-                              fontWeight: 400,
-                              fontSize: 12,
-                              color: "#667085",
-                            }}
-                          >
-                            {item.description}
-                          </p>
-                        </div>
-                      </label>
-                    );
-                  })}
-                </td>
-              </tr>
-            );
-          })}
-        </table>
+        {data.map(function (item, index) {
+          return (
+            <div
+              style={{
+                display: "flex",
+                padding: 40,
+                flexWrap: "wrap",
+                borderBottom:
+                  index + 1 === data.length ? undefined : "1px solid #eaeaea",
+              }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                }}
+              >
+                <p style={{ fontSize: 20, fontWeight: 600 }}>{item.label}</p>
+                <p style={{ color: "#667085", marginBottom: 32 }}>
+                  {item.description}
+                </p>
+              </div>
+              <div
+                style={{
+                  flex: 1,
+                  flexDirection: "column",
+                  display: "flex",
+                }}
+              >
+                {item.options.map(function (i) {
+                  return (
+                    <label
+                      style={{
+                        fontSize: 16,
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: 8,
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        style={{ marginRight: 8 }}
+                        checked={i.active}
+                      />
+                      <div>
+                        <p>{i.label}</p>
+                        <p
+                          style={{
+                            fontWeight: 400,
+                            fontSize: 12,
+                            color: "#667085",
+                          }}
+                        >
+                          {i.description}
+                        </p>
+                      </div>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+        {/* </table> */}
       </div>
     </div>
   );

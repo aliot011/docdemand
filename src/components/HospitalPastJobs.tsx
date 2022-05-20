@@ -1,6 +1,5 @@
 import { ButtonUnstyled } from "@mui/base";
 import "../App.css";
-// import "../styles/ListStyle.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
@@ -8,7 +7,6 @@ import type { User } from "../types";
 import { MdChevronRight, MdEvent, MdSchedule } from "react-icons/md";
 import axios from "axios";
 import { FaSort } from "react-icons/fa";
-import { Link } from "@mui/material";
 
 function getCancelTokenSource() {
   const cancelToken = axios.CancelToken;
@@ -29,6 +27,7 @@ export default function HospitalPastJobs() {
       created: new Date(),
       type: "Shift",
       open: false,
+      provider: "John Smith",
       paid: true,
       time: {
         start: new Date("7/6/2022"),
@@ -44,12 +43,13 @@ export default function HospitalPastJobs() {
     },
     {
       id: "00022222",
-      hospital: "Gottlieb Memorial Hospital",
+      hospital: "Private Surgery Center",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       created: new Date(),
       type: "Call",
       open: false,
+      provider: "John Smith",
       paid: false,
       time: {
         start: new Date("7/12/2022"),
@@ -167,10 +167,10 @@ export default function HospitalPastJobs() {
               fontWeight: "700",
             }}
           >
-            Your Job Listings
+            Past Jobs
           </h1>
           <p style={{ color: "#667085" }}>
-            These are jobs that you have listed at your locations.
+            These are jobs at your locations that have already passed.
           </p>
         </div>
       </div>
@@ -208,7 +208,7 @@ export default function HospitalPastJobs() {
                       color: "#00b0f0",
                     }}
                   >
-                    ${item.rate}/hr
+                    ${item.rate * 8}
                   </p>
                 </div>
               </div>
@@ -272,142 +272,32 @@ export default function HospitalPastJobs() {
               />
               <p style={{ marginBottom: 12 }}>{item.description}</p>
               <div style={{ marginBottom: 12 }}>
-                <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
-                  Provider Type
-                </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {item.providerType.map(function (item) {
-                    return (
-                      <div
-                        style={{
-                          background: "#eaeaea",
-                          paddingBlock: 4,
-                          paddingInline: 12,
-                          borderRadius: 40,
-                          margin: 2,
-                        }}
-                      >
-                        <p style={{ fontWeight: 500, maxLines: 1 }}>
-                          {item.label}
-                        </p>
-                      </div>
-                    );
-                  })}
+                <div style={{ marginBottom: 12 }}>
+                  <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
+                    Provider
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "#eaeaea",
+                        paddingBlock: 4,
+                        paddingInline: 12,
+                        borderRadius: 40,
+                        margin: 2,
+                      }}
+                    >
+                      <p style={{ fontWeight: 500, maxLines: 1 }}>
+                        {item.provider}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div style={{ marginBottom: 12 }}>
-                <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
-                  Specialty Requirements
-                </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {item.specialties.map(function (item) {
-                    return (
-                      <div
-                        style={{
-                          background: "#eaeaea",
-                          paddingBlock: 4,
-                          paddingInline: 12,
-                          borderRadius: 40,
-                          margin: 2,
-                        }}
-                      >
-                        <p style={{ fontWeight: 500, maxLines: 1 }}>
-                          {item.label}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <div style={{ marginBottom: 12 }}>
-                <p style={{ marginBottom: 4, fontWeight: 500, fontSize: 14 }}>
-                  Certification Requirements
-                </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {item.certifications.map(function (item) {
-                    return (
-                      <div
-                        style={{
-                          background: "#eaeaea",
-                          paddingBlock: 4,
-                          paddingInline: 12,
-                          borderRadius: 40,
-                          margin: 2,
-                        }}
-                      >
-                        <p style={{ fontWeight: 500, maxLines: 1 }}>
-                          {item.label}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignSelf: "flex-end",
-                }}
-              >
-                <ButtonUnstyled
-                  style={{
-                    cursor: "pointer",
-                    marginTop: 12,
-                    border: "0px",
-                    borderRadius: 4,
-                    paddingBlock: 4,
-                    paddingLeft: 12,
-                    background: "#00b0f0",
-                    color: "#fff",
-                    fontWeight: 600,
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <p>MODIFY JOB</p>
-                  <MdChevronRight size={20} style={{ marginLeft: 8 }} />
-                </ButtonUnstyled>
-                <ButtonUnstyled
-                  style={{
-                    cursor: "pointer",
-                    marginTop: 4,
-                    border: "0px",
-                    borderRadius: 4,
-                    paddingBlock: 4,
-                    paddingLeft: 12,
-                    background: "#9e9e9e",
-                    color: "#fff",
-                    fontWeight: 600,
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <p>CANCEL JOB</p>
-                  <MdChevronRight size={20} style={{ marginLeft: 8 }} />
-                </ButtonUnstyled>
               </div>
             </div>
           );
@@ -439,12 +329,12 @@ export default function HospitalPastJobs() {
               </th>
               <th>
                 <ButtonUnstyled style={filterButtonStyle}>
-                  <p>Compensation</p> <FaSort style={{ marginLeft: 4 }} />
+                  <p>Provider</p> <FaSort style={{ marginLeft: 4 }} />
                 </ButtonUnstyled>
               </th>
               <th>
                 <ButtonUnstyled style={filterButtonStyle}>
-                  <p>Posted</p> <FaSort style={{ marginLeft: 4 }} />
+                  <p>Compensation</p> <FaSort style={{ marginLeft: 4 }} />
                 </ButtonUnstyled>
               </th>
               <th
@@ -484,16 +374,8 @@ export default function HospitalPastJobs() {
                       minute: "2-digit",
                     })}
                   </td>
-                  <td>${item.rate}.00</td>
-                  <td>
-                    <p style={{ fontSize: 14 }}>
-                      {new Date(item.created).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </td>
+                  <td>{item.provider}</td>
+                  <td>${item.rate * 8}.00</td>
                   <td style={{ alignItems: "flex-start" }}>
                     <div
                       style={{
@@ -511,28 +393,17 @@ export default function HospitalPastJobs() {
                         alignSelf: "flex-start",
                       }}
                     >
-                      <p style={{ fontSize: 14 }}>
+                      <p
+                        style={{
+                          fontSize: 14,
+                          maxLines: 1,
+                          flexShrink: 0,
+                        }}
+                      >
                         {item.paid === true ? "Paid" : "Not Paid"}
                       </p>
                     </div>
                   </td>
-                  {/* <td>
-                    <Link
-                      style={{
-                        cursor: "pointer",
-                        border: "0px",
-                        paddingBlock: 4,
-                        paddingLeft: 12,
-                        fontWeight: 600,
-                        display: "flex",
-                        justifyContent: "flex-end",
-                      }}
-                      onClick={() => navigate("addlisting")}
-                    >
-                      <p>Modify Job</p>
-                      <MdChevronRight size={20} />
-                    </Link>
-                  </td> */}
                 </tr>
               );
             })}

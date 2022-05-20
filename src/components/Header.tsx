@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { FaStethoscope } from "react-icons/fa";
 import { MdClose, MdOutlineMenu } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { Colors } from "../Colors";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import ProfileDrawer from "./HospitalDrawer";
 import ProviderMenu from "./ProviderMenu";
@@ -56,7 +57,7 @@ export default function Header(props: { windowTrigger: number }) {
           >
             <div
               style={{
-                background: "purple",
+                background: Colors.bluePrimary,
                 borderRadius: 20,
                 display: "flex",
                 flexDirection: "row",
@@ -68,7 +69,7 @@ export default function Header(props: { windowTrigger: number }) {
             >
               <FaStethoscope style={{ color: "#FBFBFD" }} />
             </div>
-            <h2 style={{ color: "purple", fontSize: 28 }}>Pagerr</h2>
+            <h2 style={{ color: Colors.bluePrimary, fontSize: 28 }}>Pagerr</h2>
           </div>
           <ProviderMenu />
         </div>
@@ -110,7 +111,7 @@ export default function Header(props: { windowTrigger: number }) {
           >
             <div
               style={{
-                background: "purple",
+                background: Colors.bluePrimary,
                 borderRadius: 20,
                 display: "flex",
                 flexDirection: "row",
@@ -122,7 +123,7 @@ export default function Header(props: { windowTrigger: number }) {
             >
               <FaStethoscope style={{ color: "#FBFBFD" }} />
             </div>
-            <h2 style={{ color: "purple", fontSize: 28 }}>Pagerr</h2>
+            <h2 style={{ color: Colors.bluePrimary, fontSize: 28 }}>Pagerr</h2>
           </div>
         )}
         {globalState.state.token === "" ? null : (

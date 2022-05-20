@@ -46,7 +46,8 @@ export default function ProfileDrawer() {
           <p
             style={{
               textAlign: "center",
-              color: "rgba(45, 49, 166, 1)",
+              color: Colors.bluePrimary,
+              fontWeight: 600,
             }}
           >
             {data.name.charAt(0)}
@@ -94,7 +95,6 @@ export default function ProfileDrawer() {
           </div>
           <ProfileComponent label={"Name"} value={data.name} />
           <ProfileComponent label={"Email"} value={data.email} />
-          <ProfileComponent label={"Hospital"} value={data.hospital} />
         </div>
         <Link
           href={"../login"}

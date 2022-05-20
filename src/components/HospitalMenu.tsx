@@ -29,13 +29,13 @@ export default function ProviderMenu() {
             flexDirection: "column",
           }}
         >
-          <MenuHeader label="Listing Management" />
+          <MenuHeader label="Job Management" />
           <MenuLink
             title={"Job Listings"}
             link="listings"
             icon={<MdWorkspaces />}
           />
-          <MenuLink title={"My Jobs"} link="jobs" icon={<MdEventNote />} />
+          <MenuLink title={"Past Jobs"} link="jobs" icon={<MdEventNote />} />
         </div>
         <div
           style={{

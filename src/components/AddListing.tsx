@@ -1,9 +1,12 @@
-import { Grid, Link } from "@mui/material";
-import { MdArrowBack } from "react-icons/md";
+import { Grid, Link, Modal } from "@mui/material";
+import { useState } from "react";
+import { MdArrowBack, MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { ButtonUnstyled } from "@mui/base";
 
 export default function AddListing() {
   const navigate = useNavigate();
+  const [cancelVisible, setCancelVisible] = useState(false);
 
   const Specialties = [
     { id: 1, label: "General Anesthesia" },
@@ -38,6 +41,78 @@ export default function AddListing() {
         flex: 1,
       }}
     >
+      <Modal
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          alignContent: "center",
+          display: "flex",
+          zIndex: 4,
+          flex: 1,
+        }}
+        open={cancelVisible}
+        onBackdropClick={() => setCancelVisible(!cancelVisible)}
+        disableScrollLock
+      >
+        <div
+          style={{
+            background: "#fff",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: 20,
+            maxWidth: 520,
+            padding: 20,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 12,
+            }}
+          >
+            <p style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>Success!</p>
+          </div>
+          <div>
+            <p style={{ fontSize: 14, fontWeight: 400 }}>
+              Your job has been posted. We'll let you know once it's been filled
+              by a provider.
+            </p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignSelf: "flex-end",
+              marginTop: 12,
+            }}
+          >
+            <ButtonUnstyled
+              style={{
+                cursor: "pointer",
+                margin: 4,
+                border: "0px",
+                borderRadius: 4,
+                paddingBlock: 6,
+                paddingInline: 8,
+                background: "#00b0f0",
+                color: "#fff",
+                fontWeight: 600,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              onClick={() => navigate("..")}
+            >
+              <p>SOUNDS GOOD</p>
+            </ButtonUnstyled>
+          </div>
+        </div>
+      </Modal>
+
       <div
         style={{
           display: "flex",
@@ -213,11 +288,14 @@ export default function AddListing() {
               }}
               type={"submit"}
               value="Add Listing"
-              onClick={() => navigate("..")}
+              onClick={(e) => {
+                e.preventDefault();
+                setCancelVisible(true);
+              }}
             />
             <Link
               underline="none"
-              style={{ fontWeight: 600, cursor: "pointer" }}
+              style={{ fontWeight: 600, cursor: "pointer", color: "gray" }}
               onClick={() => navigate("..")}
             >
               Cancel

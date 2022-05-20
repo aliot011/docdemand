@@ -4,7 +4,15 @@ import { MdAddCircle } from "react-icons/md";
 import type { hospital_id } from "../types";
 
 export default function AddHospital() {
-  const [hospitals, setHospitals] = useState<hospital_id[]>();
+  const [hospitals, setHospitals] = useState<hospital_id[]>([
+    {
+      id: 123,
+      name: "Gottlieb Memorial Hospital",
+      address: "123 Happy Street, Melrose Park, IL",
+      phone: "555-123-1234",
+      active: true,
+    },
+  ]);
 
   const [filter, setFilter] = useState<string>("");
 
@@ -12,20 +20,20 @@ export default function AddHospital() {
 
   //   var config = ;
 
-  useState(() =>
-    axios({
-      method: "get",
-      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/hospital",
-      headers: {},
-    })
-      .then(function (response: any) {
-        setHospitals(response.data);
-        // alert(JSON.stringify(response.data));
-      })
-      .catch(function (error: any) {
-        console.log(error);
-      })
-  );
+  // useState(() =>
+  //   axios({
+  //     method: "get",
+  //     url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/hospital",
+  //     headers: {},
+  //   })
+  //     .then(function (response: any) {
+  //       setHospitals(response.data);
+  //       // alert(JSON.stringify(response.data));
+  //     })
+  //     .catch(function (error: any) {
+  //       console.log(error);
+  //     })
+  // );
 
   return (
     <div

@@ -35,15 +35,15 @@ export default function Profile() {
         id: 1,
         name: "Gottlieb Memorial Hospital",
         address: "701 W North Ave, Melrose Park, IL 60160",
-        phone: "414-234-6369",
+        phone: "312-000-0000",
         active: true,
       },
       {
         id: 2,
-        name: "Gottlieb Memorial Hospital",
-        address: "701 W North Ave, Melrose Park, IL 60160",
-        phone: "414-234-6369",
-        active: false,
+        name: "Northwestern Hospital Chicago",
+        address: "251 E Huron St, Chicago, IL 60611",
+        phone: "312-000-0000",
+        active: true,
       },
     ],
   });
@@ -107,7 +107,7 @@ export default function Profile() {
               fontWeight: "700",
             }}
           >
-            Profile
+            My Facilities
           </h1>
         </div>
         <div style={{ flex: 1 }}>
