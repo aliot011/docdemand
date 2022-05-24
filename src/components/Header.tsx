@@ -27,7 +27,12 @@ export default function Header(props: { windowTrigger: number }) {
 
   return (
     <>
-      <Drawer anchor="left" open={menuOpen} variant="persistent">
+      <Drawer
+        anchor="left"
+        open={menuOpen}
+        variant="persistent"
+        onBackdropClick={() => setMenuOpen(false)}
+      >
         <div style={{ background: "#FBFBFD", padding: 10 }}>
           <div
             style={{

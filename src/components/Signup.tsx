@@ -120,8 +120,8 @@ export default function Signup() {
           />
         </label>
         {/* <p>
-                {name}, {email}, {password}
-              </p> */}
+          {name}, {email}, {password}
+        </p> */}
         <ButtonUnstyled
           onClick={() => {
             Signup();

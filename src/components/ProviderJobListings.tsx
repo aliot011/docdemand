@@ -1,23 +1,21 @@
 import { ButtonUnstyled } from "@mui/base";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import type { User } from "../types";
+import { useState, useEffect } from "react";
 import { MdChevronRight, MdClose, MdEvent, MdSchedule } from "react-icons/md";
-import axios from "axios";
-import { FaSort } from "react-icons/fa";
+import { FaInfoCircle, FaSort } from "react-icons/fa";
 import { Modal } from "@mui/material";
+import { Colors } from "../Colors";
 
-function getCancelTokenSource() {
-  const cancelToken = axios.CancelToken;
-  const source = cancelToken.source();
-  return source;
-}
+// function getCancelTokenSource() {
+//   const cancelToken = axios.CancelToken;
+//   const source = cancelToken.source();
+//   return source;
+// }
 
 export default function JobListings() {
   const navigate = useNavigate();
-  const globalState = useContext(GlobalStateContext);
+  // const globalState = useContext(GlobalStateContext);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -44,27 +42,279 @@ export default function JobListings() {
       ],
       certifications: [{ id: 2, label: "Board Eligible" }],
     },
-    // {
-    //   id: "00022222",
-    //   hospital: "Private Surgery Center",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    //   created: new Date(),
-    //   type: "Call",
-    //   open: false,
-    //   time: {
-    //     start: new Date("7/12/2022"),
-    //     end: new Date("7/13/2022"),
-    //   },
-    //   rate: 220,
-    //   providerType: [{ id: 1, label: "PhD" }],
-    //   specialties: [
-    //     { id: 3, label: "Cardiac" },
-    //     { id: 4, label: "Pain Management" },
-    //     { id: 5, label: "Regional" },
-    //   ],
-    //   certifications: [{ id: 1, label: "Board Certified" }],
-    // },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
+    {
+      id: "00022222",
+      hospital: "Private Surgery Center",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      created: new Date(),
+      type: "Call",
+      open: false,
+      time: {
+        start: new Date("7/12/2022"),
+        end: new Date("7/13/2022"),
+      },
+      rate: 220,
+      providerType: [{ id: 1, label: "PhD" }],
+      specialties: [
+        { id: 3, label: "Cardiac" },
+        { id: 4, label: "Pain Management" },
+        { id: 5, label: "Regional" },
+      ],
+      certifications: [{ id: 1, label: "Board Certified" }],
+    },
   ]);
 
   const [modalData, setModalData] = useState({
@@ -87,13 +337,6 @@ export default function JobListings() {
     ],
     certifications: [{ id: 2, label: "Board Eligible" }],
   });
-
-  const [user, setUser] = useState<User>();
-
-  const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
-  const [textAlerts, setTextAlerts] = useState<boolean>(false);
-  const [call, setCall] = useState<boolean>(false);
-  const [shift, setShift] = useState<boolean>(false);
 
   // useEffect(() => {
   //   const cancelTokenSource = getCancelTokenSource();
@@ -396,6 +639,14 @@ export default function JobListings() {
               <div
                 style={{
                   display: "flex",
+                  height: 1,
+                  background: "#efeff4",
+                  marginBottom: 12,
+                }}
+              />
+              <div
+                style={{
+                  display: "flex",
                   flexDirection: "column",
                   alignSelf: "flex-end",
                 }}
@@ -404,12 +655,12 @@ export default function JobListings() {
                   style={{
                     cursor: "pointer",
                     marginTop: 4,
-                    border: "0px",
                     borderRadius: 4,
                     paddingBlock: 4,
                     paddingLeft: 12,
-                    background: "lightgreen",
-                    color: "green",
+                    border: `1px solid ${Colors.bluePrimary}`,
+                    background: Colors.border,
+                    color: Colors.bluePrimary,
                     fontWeight: 600,
                     display: "flex",
                     flexDirection: "row",
@@ -512,7 +763,7 @@ export default function JobListings() {
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "lightgray",
+                background: "#fff",
                 color: "gray",
                 fontWeight: 600,
                 display: "flex",
@@ -528,12 +779,12 @@ export default function JobListings() {
               style={{
                 cursor: "pointer",
                 margin: 4,
-                border: "0px",
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "lightgreen",
-                color: "green",
+                border: `1px solid ${Colors.bluePrimary}`,
+                background: Colors.border,
+                color: Colors.bluePrimary,
                 fontWeight: 600,
                 display: "flex",
                 flexDirection: "row",
@@ -547,6 +798,7 @@ export default function JobListings() {
               }}
             >
               <p>CLAIM JOB</p>
+              <MdChevronRight size={20} style={{ marginLeft: 4 }} />
             </ButtonUnstyled>
           </div>
         </div>
@@ -584,7 +836,7 @@ export default function JobListings() {
             }}
           >
             <p style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
-              Congratulations!
+              Job Confirmed!
             </p>
             <MdClose
               size={24}
@@ -637,7 +889,7 @@ export default function JobListings() {
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "lightgray",
+                background: "#fff",
                 color: "gray",
                 fontWeight: 600,
                 display: "flex",
@@ -653,12 +905,12 @@ export default function JobListings() {
               style={{
                 cursor: "pointer",
                 margin: 4,
-                border: "0px",
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "lightgreen",
-                color: "green",
+                border: `1px solid ${Colors.bluePrimary}`,
+                background: Colors.border,
+                color: Colors.bluePrimary,
                 fontWeight: 600,
                 display: "flex",
                 flexDirection: "row",
@@ -705,6 +957,38 @@ export default function JobListings() {
           </h1>
           <p style={{ color: "#667085" }}>
             These are open jobs that fit your criteria.
+          </p>
+        </div>
+
+        <div
+          style={{
+            border: `1px solid ${Colors.bluePrimary}`,
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 24,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <FaInfoCircle
+            style={{
+              color: Colors.bluePrimary,
+              marginRight: 12,
+              flexShrink: 0,
+            }}
+            size={24}
+          />
+          <p
+            style={{
+              color: Colors.bluePrimary,
+              fontSize: 14,
+              fontWeight: 500,
+            }}
+          >
+            Welcome to Pagerr! We're still validating your account, so for now
+            you won't be able to claim the jobs listed below. Expect an email
+            from us once your account has been validated.
           </p>
         </div>
         {windowWidth < 800 ? (

@@ -56,7 +56,11 @@ export default function ProfileDrawer() {
         <p style={{ marginLeft: 4, marginRight: 12 }}>{data.name}</p>
         <MdChevronRight color={Colors.blueMediumPrimary} />
       </Link>
-      <Drawer anchor="right" open={profileOpen}>
+      <Drawer
+        anchor="right"
+        open={profileOpen}
+        onBackdropClick={() => setProfileOpen(false)}
+      >
         <div
           style={{
             // width: 280,

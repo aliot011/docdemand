@@ -1,16 +1,13 @@
 import { ButtonUnstyled } from "@mui/base";
 import { Link } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import { useContext } from "react";
-import axios from "axios";
 
-function getCancelTokenSource() {
-  const cancelToken = axios.CancelToken;
-  const source = cancelToken.source();
-  return source;
-}
+// function getCancelTokenSource() {
+//   const cancelToken = axios.CancelToken;
+//   const source = cancelToken.source();
+//   return source;
+// }
 
 export default function Login() {
   let navigate = useNavigate();
@@ -18,7 +15,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const globalContext = useContext(GlobalStateContext);
+  // const globalContext = useContext(GlobalStateContext);
 
   // useEffect(() => {
   //   if (globalContext.state.token) {
@@ -26,40 +23,40 @@ export default function Login() {
   //   }
   // }, []);
 
-  function login() {
-    const cancelTokenSource = getCancelTokenSource();
+  // function login() {
+  //   const cancelTokenSource = getCancelTokenSource();
 
-    axios({
-      method: "POST",
-      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/login",
-      cancelToken: cancelTokenSource.token,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        email: email,
-        password: password,
-      },
-    })
-      .then((response) => {
-        globalContext.setState((prev) => {
-          return {
-            ready: true,
-            token: response.data.authToken,
-          };
-        });
+  //   axios({
+  //     method: "POST",
+  //     url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/login",
+  //     cancelToken: cancelTokenSource.token,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     data: {
+  //       email: email,
+  //       password: password,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       globalContext.setState((prev) => {
+  //         return {
+  //           ready: true,
+  //           token: response.data.authToken,
+  //         };
+  //       });
 
-        navigate("../provider/listings");
-      })
-      .catch((error) => {
-        if (axios.isCancel(error)) {
-          //User navigated away
-        } else if (axios.isAxiosError(error)) {
-          //TODO: Handle whatever error comes back
-          alert("Error logging in.");
-        }
-      });
-  }
+  //       navigate("../provider/listings");
+  //     })
+  //     .catch((error) => {
+  //       if (axios.isCancel(error)) {
+  //         //User navigated away
+  //       } else if (axios.isAxiosError(error)) {
+  //         //TODO: Handle whatever error comes back
+  //         alert("Error logging in.");
+  //       }
+  //     });
+  // }
 
   // var data = JSON.stringify({
   //   email: email,
@@ -99,7 +96,7 @@ export default function Login() {
         flexDirection: "column",
       }}
     >
-      <p>{globalContext.state.token}</p>
+      {/* <p>{globalContext.state.token}</p> */}
       <div
         style={{
           display: "flex",
@@ -143,7 +140,8 @@ export default function Login() {
           Login
         </ButtonUnstyled>
         <p style={{ fontSize: 12, margin: 12 }}>
-          Don't have an account? <Link href="./signup">Signup</Link>.
+          Forgot your password?{" "}
+          <Link style={{ cursor: "pointer" }}>Click here.</Link>
         </p>
       </div>
     </div>

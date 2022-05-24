@@ -12,17 +12,16 @@ export default function AddListing() {
     { id: 1, label: "General Anesthesia" },
     { id: 2, label: "Obstetric" },
     { id: 3, label: "Cardiac" },
-    { id: 4, label: "Pain Management" },
-    { id: 5, label: "Regional" },
+    // { id: 4, label: "Pain Management" },
+    { id: 5, label: "Regional with Ultrasound" },
     { id: 6, label: "Critical Care" },
     { id: 7, label: "Pediatric (<1 years old)" },
-    { id: 8, label: "Pediatric (<2 years old)" },
-    { id: 9, label: "Pediatric (<5 years old)" },
-    { id: 10, label: "Pediatric (5-18 years old)" },
+    { id: 8, label: "Pediatric (<5 years old)" },
+    { id: 9, label: "Pediatric (5-18 years old)" },
   ];
 
   const Providers = [
-    { id: 1, label: "PhD" },
+    { id: 1, label: "MD / DO" },
     { id: 2, label: "CRNA" },
   ];
 
@@ -182,6 +181,13 @@ export default function AddListing() {
         <div style={{ height: 1, background: "#eaeaea", margin: 16 }} />
         <form style={{ margin: 12, display: "flex", flexDirection: "column" }}>
           <DetailContainer label="Job Details">
+            {/* <label>
+              Location
+              <select>
+                <option value="Daily">Shift (one-time)</option>
+                <option value="Daily">Extended Job (multiple shifts)</option>
+              </select>
+            </label> */}
             <label>
               Location
               <input type={"text"} />

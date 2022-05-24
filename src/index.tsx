@@ -19,6 +19,11 @@ import HospitalChrome from "./components/HospitalChrome";
 import ProviderChrome from "./components/ProviderChrome";
 import ProviderJobDetails from "./components/ProviderJobDetails";
 import HospitalPastJobs from "./components/HospitalPastJobs";
+import ScrollToTop from "./helpers/ScrollToTop";
+import ProviderSignup1 from "./components/ProviderSignup1";
+import SignupChrome from "./components/SignupChrome";
+import ProviderSignup2 from "./components/ProviderSignup2";
+import ProviderSignup3 from "./components/ProviderSignup3";
 
 const GlobalStateProvider = getGlobalStateProvider();
 
@@ -26,39 +31,44 @@ ReactDOM.render(
   <React.StrictMode>
     <GlobalStateProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="signup" element={<Signup />} />
-            <Route path="login" element={<Login />} />
-            {/* <Route element={<AuthorizationRequired />}> */}
-            <Route path="provider" element={<ProviderChrome />}>
-              <Route path="listings" element={<ProviderJobListings />} />
-              <Route path="detail" element={<ProviderJobDetails />} />
-              <Route path="jobs" element={<YourJobs />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="profile" element={<Outlet />}>
-                <Route index element={<Profile />} />
-                <Route path="addhospital" element={<AddHospital />} />
+        <ScrollToTop>
+          <Routes>
+            <Route path="/" element={<App />}>
+              {/* <Route path="signup" element={<Signup />} /> */}
+              <Route path="login" element={<Login />} />
+              <Route path="providersignup" element={<SignupChrome />}>
+                <Route index element={<ProviderSignup1 />} />
+                <Route path="2" element={<ProviderSignup2 />} />
+                <Route path="3" element={<ProviderSignup3 />} />
               </Route>
-              <Route path="" element={<ProviderJobListings />} />
-              <Route index element={<ProviderJobListings />} />
-            </Route>
-            <Route path="addhospital" element={<AddHospital />} />
-            {/* </Route> */}
-            <Route path="hospital" element={<HospitalChrome />}>
-              <Route path="listings" element={<Outlet />}>
-                <Route index element={<HospitalJobListings />} />
+              <Route path="provider" element={<ProviderChrome />}>
+                <Route path="listings" element={<ProviderJobListings />} />
+                <Route path="detail" element={<ProviderJobDetails />} />
+                <Route path="jobs" element={<YourJobs />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="profile" element={<Outlet />}>
+                  <Route index element={<Profile />} />
+                  <Route path="addhospital" element={<AddHospital />} />
+                </Route>
+                <Route path="" element={<ProviderJobListings />} />
+                <Route index element={<ProviderJobListings />} />
+              </Route>
+              <Route path="addhospital" element={<AddHospital />} />
+              <Route path="hospital" element={<HospitalChrome />}>
+                <Route path="listings" element={<Outlet />}>
+                  <Route index element={<HospitalJobListings />} />
+                  <Route path="addlisting" element={<AddListing />} />
+                </Route>
                 <Route path="addlisting" element={<AddListing />} />
+                <Route path="jobs" element={<HospitalPastJobs />} />
+                <Route path="" element={<HospitalJobListings />} />
+                <Route index element={<HospitalJobListings />} />
               </Route>
-              <Route path="addlisting" element={<AddListing />} />
-              <Route path="jobs" element={<HospitalPastJobs />} />
-              <Route path="" element={<HospitalJobListings />} />
-              <Route index element={<HospitalJobListings />} />
+              <Route index element={<Login />} />
             </Route>
-            <Route path="" element={<Signup />} />
-          </Route>
-          <Route path="*" element={<App />} />
-        </Routes>
+            <Route path="*" element={<App />} />
+          </Routes>
+        </ScrollToTop>
       </BrowserRouter>
     </GlobalStateProvider>
   </React.StrictMode>,

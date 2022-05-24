@@ -5,9 +5,17 @@ import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
 import type { User } from "../types";
 import { Modal } from "@mui/material";
-import { MdChevronRight, MdClose, MdEvent, MdSchedule } from "react-icons/md";
+import {
+  MdClose,
+  MdEvent,
+  MdLocationCity,
+  MdLocationPin,
+  MdPin,
+  MdSchedule,
+} from "react-icons/md";
 import axios from "axios";
-import { FaPhone } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
+import { Colors } from "../Colors";
 
 function getCancelTokenSource() {
   const cancelToken = axios.CancelToken;
@@ -75,53 +83,53 @@ export default function YourJobs() {
   const [call, setCall] = useState<boolean>(false);
   const [shift, setShift] = useState<boolean>(false);
 
-  useEffect(() => {
-    const cancelTokenSource = getCancelTokenSource();
+  // useEffect(() => {
+  //   const cancelTokenSource = getCancelTokenSource();
 
-    axios({
-      method: "GET",
-      url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
-      cancelToken: cancelTokenSource.token,
-      headers: {
-        Authorization: `Bearer ${globalState.state.token}`,
-      },
-    })
-      .then(function (response: any) {
-        setUser(response.data);
-        setEmailAlerts(response.data!.alert_preferences.email);
-        setTextAlerts(response.data!.alert_preferences.text);
-        setCall(response.data!.job_preferences.call);
-        setShift(response.data!.job_preferences.shift);
-      })
-      .catch(function (error: any) {
-        if (axios.isCancel(error)) {
-          //React no longer cares
-        } else if (axios.isAxiosError(error)) {
-          //The server most likely said something was wrong (i.e. we got
-          //something other than a 200 OK response).
+  //   axios({
+  //     method: "GET",
+  //     url: "https://xma7-7q1q-g4iv.n7.xano.io/api:xv_aHIEN/auth/me",
+  //     cancelToken: cancelTokenSource.token,
+  //     headers: {
+  //       Authorization: `Bearer ${globalState.state.token}`,
+  //     },
+  //   })
+  //     .then(function (response: any) {
+  //       setUser(response.data);
+  //       setEmailAlerts(response.data!.alert_preferences.email);
+  //       setTextAlerts(response.data!.alert_preferences.text);
+  //       setCall(response.data!.job_preferences.call);
+  //       setShift(response.data!.job_preferences.shift);
+  //     })
+  //     .catch(function (error: any) {
+  //       if (axios.isCancel(error)) {
+  //         //React no longer cares
+  //       } else if (axios.isAxiosError(error)) {
+  //         //The server most likely said something was wrong (i.e. we got
+  //         //something other than a 200 OK response).
 
-          if (error.response?.status === 401) {
-            globalState.setState((prev) => {
-              return {
-                ...prev,
-                token: "",
-              };
-            });
-          } else {
-            console.log(error.response?.data ?? "Unknown server error.");
-          }
-        } else {
-          //This is some error that happened that doesn't directly have to do
-          //with the request (such as you passed a bad parameter).
+  //         if (error.response?.status === 401) {
+  //           globalState.setState((prev) => {
+  //             return {
+  //               ...prev,
+  //               token: "",
+  //             };
+  //           });
+  //         } else {
+  //           console.log(error.response?.data ?? "Unknown server error.");
+  //         }
+  //       } else {
+  //         //This is some error that happened that doesn't directly have to do
+  //         //with the request (such as you passed a bad parameter).
 
-          const errorText: string = `${error}`;
-        }
-      });
+  //         const errorText: string = `${error}`;
+  //       }
+  //     });
 
-    return () => {
-      cancelTokenSource.cancel();
-    };
-  }, [axios, globalState.state.token]);
+  //   return () => {
+  //     cancelTokenSource.cancel();
+  //   };
+  // }, [axios, globalState.state.token]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -269,6 +277,37 @@ export default function YourJobs() {
             These are jobs that you have signed up for.
           </p>
         </div>
+        <div
+          style={{
+            border: `1px solid ${Colors.bluePrimary}`,
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 24,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <FaInfoCircle
+            style={{
+              color: Colors.bluePrimary,
+              marginRight: 12,
+              flexShrink: 0,
+            }}
+            size={24}
+          />
+          <p
+            style={{
+              color: Colors.bluePrimary,
+              fontSize: 14,
+              fontWeight: 500,
+            }}
+          >
+            Welcome to Pagerr! We're still validating your account, so for now
+            you won't be able to claim jobs. Expect an email from us once your
+            account has been validated.
+          </p>
+        </div>
         {
           (data ?? []).map(function (item) {
             return (
@@ -373,6 +412,32 @@ export default function YourJobs() {
                       })}
                     </p>
                   </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      margin: 4,
+                      background: "#00b0f0",
+                      color: "#fff",
+                      paddingBlock: 4,
+                      paddingInline: 8,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <MdLocationPin size={18} style={{ marginRight: 4 }} />
+                    <p style={{ fontSize: 16, fontWeight: 500 }}>
+                      {new Date(item.time.start).toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                      {" to "}
+                      {new Date(item.time.end).toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
                 </div>
                 <div
                   style={{ height: 1, background: "#eaeaea", marginBlock: 12 }}
@@ -381,10 +446,51 @@ export default function YourJobs() {
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-start",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
                   }}
                 >
+                  <div
+                    style={{
+                      marginBottom: 12,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <p
+                      style={{
+                        marginBottom: 4,
+                        fontWeight: 500,
+                        fontSize: 14,
+                      }}
+                    >
+                      Facility Information
+                    </p>
+                    <div
+                      style={{
+                        background: "#eaeaea",
+                        padding: 12,
+                        borderRadius: 12,
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontWeight: 500,
+                          maxLines: 1,
+                          marginBottom: 4,
+                        }}
+                      >
+                        {item.hospital}
+                      </p>
+                      <p style={{ fontWeight: 300, fontSize: 12 }}>
+                        123 Happy Feet Drive,
+                        <br />
+                        Melrose Park, IL 000000
+                      </p>
+                    </div>
+                  </div>
                   <div style={{ marginBottom: 12 }}>
                     <p
                       style={{
@@ -491,46 +597,6 @@ export default function YourJobs() {
                           </div>
                         );
                       })}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      marginBottom: 12,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <p
-                      style={{
-                        marginBottom: 4,
-                        fontWeight: 500,
-                        fontSize: 14,
-                      }}
-                    >
-                      Facility Information
-                    </p>
-                    <div
-                      style={{
-                        background: "#eaeaea",
-                        padding: 12,
-                        borderRadius: 12,
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontWeight: 500,
-                          maxLines: 1,
-                          marginBottom: 4,
-                        }}
-                      >
-                        {item.hospital}
-                      </p>
-                      <p style={{ fontWeight: 300, fontSize: 12 }}>
-                        123 Happy Feet Drive,
-                        <br />
-                        Melrose Park, IL 000000
-                      </p>
                     </div>
                   </div>
                 </div>
