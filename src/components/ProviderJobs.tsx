@@ -3,9 +3,10 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import type { User } from "../types";
+import type { Account } from "../types";
 import { Modal } from "@mui/material";
 import {
+  MdChevronRight,
   MdClose,
   MdEvent,
   MdLocationCity,
@@ -14,7 +15,7 @@ import {
   MdSchedule,
 } from "react-icons/md";
 import axios from "axios";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaInfoCircle, FaStreetView } from "react-icons/fa";
 import { Colors } from "../Colors";
 
 function getCancelTokenSource() {
@@ -35,7 +36,10 @@ export default function YourJobs() {
   const [data, setData] = useState([
     {
       id: "0001111",
-      hospital: "Gottlieb Memorial Hospital",
+      hospital: {
+        name: "Gottlieb Memorial Hospital",
+        address: "2433 S Superior Street, Milwaukee, WI 53207",
+      },
       description:
         "Located in central Illinois, this job has lots of things to do nearby! There are many historical sites, museums, parks, a zoo, and more in this area.",
       created: new Date(),
@@ -76,7 +80,7 @@ export default function YourJobs() {
     // },
   ]);
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Account>();
 
   const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
   const [textAlerts, setTextAlerts] = useState<boolean>(false);
@@ -179,7 +183,7 @@ export default function YourJobs() {
             }}
           >
             <p style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
-              Confirm Cancel
+              Are you sure you want to cancel?
             </p>
             <MdClose
               size={24}
@@ -191,6 +195,10 @@ export default function YourJobs() {
             <p style={{ fontSize: 14, fontWeight: 400 }}>
               Are you sure you would like to cancel this job? This action cannot
               be undone.
+              <br />
+              <br />
+              Since the job is within [x] days, you will be charged $[x] for
+              cancelling on short notice.
             </p>
           </div>
           <div
@@ -209,7 +217,7 @@ export default function YourJobs() {
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "lightgray",
+                background: "#ffffff",
                 color: "gray",
                 fontWeight: 600,
                 display: "flex",
@@ -225,12 +233,12 @@ export default function YourJobs() {
               style={{
                 cursor: "pointer",
                 margin: 4,
-                border: "0px",
+                border: `1px solid ${Colors.bluePrimary}`,
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "pink",
-                color: "red",
+                background: Colors.border,
+                color: Colors.bluePrimary,
                 fontWeight: 600,
                 display: "flex",
                 flexDirection: "row",
@@ -308,437 +316,222 @@ export default function YourJobs() {
             account has been validated.
           </p>
         </div>
-        {
-          (data ?? []).map(function (item) {
-            return (
+        {(data ?? []).map(function (item) {
+          return (
+            <div
+              key={item.id}
+              className={"jobCard"}
+              style={{
+                padding: 12,
+                marginBottom: 16,
+                border: "1px solid #eaeaea",
+                borderRadius: 12,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <div
-                key={item.id}
-                className={"jobCard"}
                 style={{
-                  padding: 8,
-                  marginBottom: 16,
-                  border: "1px solid #eaeaea",
-                  borderRadius: 12,
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <p style={{ fontWeight: 700, fontSize: 18 }}>
+                    {item.type} at {item.hospital.name}
+                  </p>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <p
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 700,
+                      color: Colors.bluePrimary,
+                    }}
+                  >
+                    ${item.rate * 8} (${item.rate}/hr)
+                  </p>
+                  {/* <p
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: "#00b0f0",
+                    }}
+                  >
+                    ${item.rate}/hr
+                  </p> */}
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "space-between",
+                  marginTop: 4,
+                  flexWrap: "wrap",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-between",
+                    alignItems: "center",
+                    margin: 4,
+                    background: "#00b0f0",
+                    color: "#fff",
+                    paddingBlock: 4,
+                    paddingInline: 8,
+                    borderRadius: 4,
                   }}
                 >
-                  <div>
-                    <p style={{ fontWeight: 700, fontSize: 18 }}>
-                      {item.type} at {item.hospital}
-                    </p>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <p
-                      style={{
-                        fontSize: 18,
-                        fontWeight: 700,
-                        color: "#00b0f0",
-                      }}
-                    >
-                      Est. ${item.rate * 8}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: 12,
-                        fontWeight: 700,
-                        color: "#00b0f0",
-                      }}
-                    >
-                      ${item.rate}/hr
-                    </p>
-                  </div>
+                  <MdEvent
+                    size={18}
+                    style={{ marginRight: 4, flexShrink: 0 }}
+                  />
+                  <p style={{ fontSize: 16, fontWeight: 500 }}>
+                    {new Date(item.time.start).toLocaleString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      weekday: "short",
+                    })}
+                  </p>
                 </div>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "space-between",
-                    marginTop: 4,
+                    alignItems: "center",
+                    margin: 4,
+                    background: "#00b0f0",
+                    color: "#fff",
+                    paddingBlock: 4,
+                    paddingInline: 8,
+                    borderRadius: 4,
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      margin: 4,
-                      background: "#00b0f0",
-                      color: "#fff",
-                      paddingBlock: 4,
-                      paddingInline: 8,
-                      borderRadius: 4,
-                    }}
-                  >
-                    <MdEvent size={18} style={{ marginRight: 4 }} />
-                    <p style={{ fontSize: 16, fontWeight: 500 }}>
-                      {new Date(item.time.start).toLocaleString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        weekday: "short",
-                      })}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      margin: 4,
-                      background: "#00b0f0",
-                      color: "#fff",
-                      paddingBlock: 4,
-                      paddingInline: 8,
-                      borderRadius: 4,
-                    }}
-                  >
-                    <MdSchedule size={18} style={{ marginRight: 4 }} />
-                    <p style={{ fontSize: 16, fontWeight: 500 }}>
-                      {new Date(item.time.start).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                      {" to "}
-                      {new Date(item.time.end).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      margin: 4,
-                      background: "#00b0f0",
-                      color: "#fff",
-                      paddingBlock: 4,
-                      paddingInline: 8,
-                      borderRadius: 4,
-                    }}
-                  >
-                    <MdLocationPin size={18} style={{ marginRight: 4 }} />
-                    <p style={{ fontSize: 16, fontWeight: 500 }}>
-                      {new Date(item.time.start).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                      {" to "}
-                      {new Date(item.time.end).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
+                  <MdSchedule
+                    size={18}
+                    style={{ marginRight: 4, flexShrink: 0 }}
+                  />
+                  <p style={{ fontSize: 16, fontWeight: 500 }}>
+                    {new Date(item.time.start).toLocaleTimeString("en-US", {
+                      hour: "numeric",
+                      minute: "2-digit",
+                    })}
+                    {" to "}
+                    {new Date(item.time.end).toLocaleTimeString("en-US", {
+                      hour: "numeric",
+                      minute: "2-digit",
+                    })}
+                  </p>
                 </div>
-                <div
-                  style={{ height: 1, background: "#eaeaea", marginBlock: 12 }}
-                />
-                <p style={{ marginBottom: 12 }}>{item.description}</p>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-between",
-                    flexWrap: "wrap",
+                    alignItems: "center",
+                    margin: 4,
+                    background: "#00b0f0",
+                    color: "#fff",
+                    paddingBlock: 4,
+                    paddingInline: 8,
+                    borderRadius: 4,
                   }}
                 >
-                  <div
+                  <MdLocationPin
+                    size={18}
+                    style={{ marginRight: 4, flexShrink: 0 }}
+                  />
+                  <p style={{ fontSize: 16, fontWeight: 500 }}>
+                    {item.hospital.address}
+                  </p>
+                </div>
+              </div>
+              <div
+                style={{ height: 1, background: "#eaeaea", marginBlock: 12 }}
+              />
+              <p style={{ marginBottom: 12, flex: 1 }}>{item.description}</p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  flex: 2,
+                }}
+              >
+                <div>
+                  <p
                     style={{
-                      marginBottom: 12,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
+                      marginBottom: 4,
+                      fontWeight: 500,
+                      fontSize: 14,
                     }}
                   >
-                    <p
-                      style={{
-                        marginBottom: 4,
-                        fontWeight: 500,
-                        fontSize: 14,
-                      }}
-                    >
-                      Facility Information
-                    </p>
-                    <div
-                      style={{
-                        background: "#eaeaea",
-                        padding: 12,
-                        borderRadius: 12,
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontWeight: 500,
-                          maxLines: 1,
-                          marginBottom: 4,
-                        }}
-                      >
-                        {item.hospital}
-                      </p>
-                      <p style={{ fontWeight: 300, fontSize: 12 }}>
-                        123 Happy Feet Drive,
-                        <br />
-                        Melrose Park, IL 000000
-                      </p>
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <p
-                      style={{
-                        marginBottom: 4,
-                        fontWeight: 500,
-                        fontSize: 14,
-                      }}
-                    >
-                      Provider Type
-                    </p>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      {item.providerType.map(function (item) {
-                        return (
-                          <div
-                            style={{
-                              background: "#eaeaea",
-                              paddingBlock: 4,
-                              paddingInline: 12,
-                              borderRadius: 12,
-                              margin: 2,
-                            }}
-                          >
-                            <p style={{ fontWeight: 500, maxLines: 1 }}>
-                              {item.label}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <p
-                      style={{
-                        marginBottom: 4,
-                        fontWeight: 500,
-                        fontSize: 14,
-                      }}
-                    >
-                      Specialty Requirements
-                    </p>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      {item.specialties.map(function (item) {
-                        return (
-                          <div
-                            style={{
-                              background: "#eaeaea",
-                              paddingBlock: 4,
-                              paddingInline: 12,
-                              borderRadius: 12,
-                              margin: 2,
-                            }}
-                          >
-                            <p style={{ fontWeight: 500, maxLines: 1 }}>
-                              {item.label}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <p
-                      style={{
-                        marginBottom: 4,
-                        fontWeight: 500,
-                        fontSize: 14,
-                      }}
-                    >
-                      Certification Requirements
-                    </p>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      {item.certifications.map(function (item) {
-                        return (
-                          <div
-                            style={{
-                              background: "#eaeaea",
-                              paddingBlock: 4,
-                              paddingInline: 12,
-                              borderRadius: 12,
-                              margin: 2,
-                            }}
-                          >
-                            <p style={{ fontWeight: 500, maxLines: 1 }}>
-                              {item.label}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    Specialty Requirements
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {item.specialties.map(function (item) {
+                      return (
+                        <div
+                          style={{
+                            background: "#eaeaea",
+                            paddingBlock: 4,
+                            paddingInline: 12,
+                            borderRadius: 12,
+                            margin: 2,
+                          }}
+                        >
+                          <p style={{ fontWeight: 500, maxLines: 1 }}>
+                            {item.label}
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    alignSelf: "flex-end",
+                    flex: 1,
+                    alignItems: "flex-end",
+                    justifyContent: "flex-end",
                   }}
                 >
                   <ButtonUnstyled
                     style={{
                       cursor: "pointer",
-                      marginTop: 4,
-                      border: "0px",
+                      marginTop: 12,
                       borderRadius: 4,
                       paddingBlock: 6,
                       paddingInline: 8,
-                      background: "#9e9e9e",
-                      color: "#fff",
+                      background: Colors.border,
+                      color: Colors.bluePrimary,
                       fontWeight: 600,
                       display: "flex",
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      border: `1px solid ${Colors.bluePrimary}`,
                     }}
                     onClick={() => setCancelVisible(true)}
                   >
                     <p>CANCEL JOB</p>
+                    <MdChevronRight size={20} />
                   </ButtonUnstyled>
                 </div>
               </div>
-            );
-          })
-          //  : (
-          //   <table style={{ borderCollapse: "collapse" }}>
-          //     <thead style={{ marginBottom: 8 }}>
-          //       <tr
-          //         style={{
-          //           display: "table-row",
-          //           textAlign: "left",
-          //         }}
-          //       >
-          //         <th
-          //           style={{
-          //             borderTopLeftRadius: 8,
-          //             borderBottomLeftRadius: 8,
-          //           }}
-          //         >
-          //           <ButtonUnstyled style={filterButtonStyle}>
-          //             <p>Location</p> <FaSort style={{ marginLeft: 4 }} />
-          //           </ButtonUnstyled>
-          //         </th>
-
-          //         <th>
-          //           <ButtonUnstyled style={filterButtonStyle}>
-          //             <p>Date / Time</p> <FaSort style={{ marginLeft: 4 }} />
-          //           </ButtonUnstyled>
-          //         </th>
-
-          //         <th>
-          //           <ButtonUnstyled style={filterButtonStyle}>
-          //             <p>Compensation</p> <FaSort style={{ marginLeft: 4 }} />
-          //           </ButtonUnstyled>
-          //         </th>
-          //         <th>
-          //           <ButtonUnstyled style={filterButtonStyle}>
-          //             <p>Job Type</p> <FaSort style={{ marginLeft: 4 }} />
-          //           </ButtonUnstyled>
-          //         </th>
-          //         <th
-          //           style={{
-          //             borderTopRightRadius: 8,
-          //             borderBottomRightRadius: 8,
-          //           }}
-          //         />
-          //       </tr>
-          //     </thead>
-          //     <tbody>
-          //       {(data ?? []).map(function (item) {
-          //         return (
-          //           <tr
-          //             key={item.id}
-          //             style={{
-          //               borderBottom: "1px solid #D0D5DD",
-          //               textAlign: "left",
-          //             }}
-          //           >
-          //             <td>{item.hospital}</td>
-          //             <td>
-          //               {new Date(item.time.start).toLocaleString([], {
-          //                 month: "numeric",
-          //                 day: "numeric",
-          //                 weekday: "short",
-          //                 hour: "numeric",
-          //                 minute: "2-digit",
-          //               })}
-          //               {" to "}
-          //               {new Date(item.time.end).toLocaleString([], {
-          //                 hour: "numeric",
-          //                 minute: "2-digit",
-          //               })}
-          //             </td>
-
-          //             <td>${item.rate}/hour</td>
-          //             <td>
-          //               <p style={{ fontSize: 14 }}>{item.type}</p>
-          //             </td>
-          //             {/* <td>
-          //             <p style={{ fontSize: 14 }}>TBD</p>
-          //           </td> */}
-          //             <td>
-          //               <ButtonUnstyled
-          //                 style={{
-          //                   cursor: "pointer",
-          //                   border: "0px",
-          //                   borderRadius: 30,
-          //                   paddingBlock: 4,
-          //                   paddingLeft: 12,
-          //                   background: "#00b0f0",
-          //                   color: "#fff",
-          //                   fontWeight: 600,
-          //                   display: "flex",
-          //                   flexDirection: "row",
-          //                   alignItems: "center",
-          //                 }}
-          //                 onClick={() => {
-          //                   setModalData(item);
-          //                   setModalVisible(true);
-          //                 }}
-          //               >
-          //                 <p>DETAILS</p>
-          //                 <MdChevronRight size={20} style={{ marginLeft: 8 }} />
-          //               </ButtonUnstyled>
-          //             </td>
-          //           </tr>
-          //         );
-          //       })}
-          //     </tbody>
-          //   </table>
-          // )
-        }
+            </div>
+          );
+        })}
       </div>
     </>
   );

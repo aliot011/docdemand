@@ -10,7 +10,7 @@ import ProviderJobListings from "./components/ProviderJobListings";
 import AddHospital from "./components/AddHospital";
 import { getGlobalStateProvider } from "./contexts/GlobalStateContext";
 import Settings from "./components/Settings";
-import Profile from "./components/Profile";
+import Profile from "./components/Facilities";
 import AuthorizationRequired from "./components/AuthorizationRequired";
 import YourJobs from "./components/ProviderJobs";
 import HospitalJobListings from "./components/HospitalJobListings";
@@ -24,6 +24,8 @@ import ProviderSignup1 from "./components/ProviderSignup1";
 import SignupChrome from "./components/SignupChrome";
 import ProviderSignup2 from "./components/ProviderSignup2";
 import ProviderSignup3 from "./components/ProviderSignup3";
+import ProviderList from "./components/ProviderList";
+import HospitalLocations from "./components/HospitalLocations";
 
 const GlobalStateProvider = getGlobalStateProvider();
 
@@ -46,22 +48,19 @@ ReactDOM.render(
                 <Route path="detail" element={<ProviderJobDetails />} />
                 <Route path="jobs" element={<YourJobs />} />
                 <Route path="settings" element={<Settings />} />
-                <Route path="profile" element={<Outlet />}>
-                  <Route index element={<Profile />} />
-                  <Route path="addhospital" element={<AddHospital />} />
-                </Route>
-                <Route path="" element={<ProviderJobListings />} />
+                <Route path="facilities" element={<Profile />} />
+                <Route path="addhospital" element={<AddHospital />} />
                 <Route index element={<ProviderJobListings />} />
               </Route>
-              <Route path="addhospital" element={<AddHospital />} />
-              <Route path="hospital" element={<HospitalChrome />}>
+              <Route path="facility" element={<HospitalChrome />}>
                 <Route path="listings" element={<Outlet />}>
                   <Route index element={<HospitalJobListings />} />
                   <Route path="addlisting" element={<AddListing />} />
                 </Route>
+                {/* <Route path="credentials" element={<ProviderList />} /> */}
                 <Route path="addlisting" element={<AddListing />} />
                 <Route path="jobs" element={<HospitalPastJobs />} />
-                <Route path="" element={<HospitalJobListings />} />
+                <Route path="locations" element={<HospitalLocations />} />
                 <Route index element={<HospitalJobListings />} />
               </Route>
               <Route index element={<Login />} />

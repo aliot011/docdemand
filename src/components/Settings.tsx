@@ -4,7 +4,7 @@ import ReactSwitch from "react-switch";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import type { User } from "../types";
+import type { Account } from "../types";
 import axios from "axios";
 import { Modal } from "@mui/material";
 import AddHospital from "./AddHospital";
@@ -28,7 +28,7 @@ export default function Settings() {
   //   },
   // };
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Account>();
 
   const [data, setData] = useState([
     {

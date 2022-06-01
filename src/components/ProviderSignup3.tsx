@@ -3,65 +3,23 @@ import { useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../Colors";
-import type { hospital_id } from "../types";
+import type { Facility } from "../types";
 
 export default function ProviderSignup3() {
-  const [hospitals, setHospitals] = useState<hospital_id[]>([
+  const [hospitals, setHospitals] = useState<Facility[]>([
     {
-      id: 0,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
+      _id: "01",
       active: true,
-    },
-    {
-      id: 1,
+      address: {
+        address1: "111 Happy Street",
+        address2: "Apartment 12",
+        city: "Winnetka",
+        state: "IL",
+        zip: "12345",
+      },
+      entranceProtocol: "Hello",
       name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
-    },
-    {
-      id: 3,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
-    },
-    {
-      id: 4,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
-    },
-    {
-      id: 5,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
-    },
-    {
-      id: 6,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
-    },
-    {
-      id: 7,
-      name: "Gottlieb Memorial Hospital",
-      address: "123 Happy Street, Melrose Park, IL",
-      phone: "555-123-1234",
-      active: true,
+      phone: "414-234-6369",
     },
   ]);
 
@@ -135,7 +93,7 @@ export default function ProviderSignup3() {
           borderRadius: 4,
         }}
       >
-        {hospitals.map(function (item: hospital_id) {
+        {hospitals.map(function (item: Facility) {
           return (
             <li
               style={{
@@ -148,7 +106,7 @@ export default function ProviderSignup3() {
                 borderTop: "0.5px solid lightgray",
                 listStyle: "none",
               }}
-              key={item.id}
+              key={item._id}
               onClick={() => alert("select hospital")}
             >
               <div>
@@ -156,7 +114,7 @@ export default function ProviderSignup3() {
                   {item.name}
                 </p>
                 <p style={{ fontSize: 12, fontWeight: 500, marginTop: 0 }}>
-                  {item.address}
+                  {item.address.address1}
                 </p>
               </div>
               <MdAddCircle color={"lightgreen"} size={24} />

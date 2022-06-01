@@ -2,30 +2,15 @@ import { ButtonUnstyled } from "@mui/base";
 import "../App.css";
 // import "../styles/ListStyle.css";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import type { User } from "../types";
-import {
-  MdAdd,
-  MdAddCircle,
-  MdChevronRight,
-  MdClose,
-  MdEvent,
-  MdSchedule,
-} from "react-icons/md";
-import axios from "axios";
-import { FaSort } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import type { Account } from "../types";
+import { MdChevronRight, MdClose, MdEvent, MdSchedule } from "react-icons/md";
+import { FaPlusCircle, FaSort } from "react-icons/fa";
 import { Link, Modal } from "@mui/material";
-
-function getCancelTokenSource() {
-  const cancelToken = axios.CancelToken;
-  const source = cancelToken.source();
-  return source;
-}
+import { Colors } from "../Colors";
 
 export default function HospitalJobListings() {
   const navigate = useNavigate();
-  const globalState = useContext(GlobalStateContext);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [cancelVisible, setCancelVisible] = useState(false);
@@ -95,7 +80,7 @@ export default function HospitalJobListings() {
     },
   ]);
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Account>();
 
   // const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
   // const [textAlerts, setTextAlerts] = useState<boolean>(false);
@@ -224,8 +209,7 @@ export default function HospitalJobListings() {
             <ButtonUnstyled
               style={{
                 cursor: "pointer",
-                margin: 4,
-                border: "0px",
+                margin: 6,
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
@@ -236,6 +220,7 @@ export default function HospitalJobListings() {
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
+                border: `1px solid lightgray`,
               }}
               onClick={() => setCancelVisible(!cancelVisible)}
             >
@@ -244,18 +229,18 @@ export default function HospitalJobListings() {
             <ButtonUnstyled
               style={{
                 cursor: "pointer",
-                margin: 4,
-                border: "0px",
+                margin: 6,
                 borderRadius: 4,
                 paddingBlock: 6,
                 paddingInline: 8,
-                background: "pink",
-                color: "red",
+                background: Colors.border,
+                color: Colors.bluePrimary,
                 fontWeight: 600,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
+                border: `1px solid ${Colors.bluePrimary}`,
               }}
               onClick={() => {
                 setCancelVisible(false);
@@ -344,7 +329,7 @@ export default function HospitalJobListings() {
                   }}
                 >
                   <p style={{ fontSize: 16, fontWeight: 500 }}>
-                    ${modalData.rate}/hr
+                    {modalData.rate * 8} (${modalData.rate}/hr)
                   </p>
                 </div>
                 <div
@@ -512,18 +497,18 @@ export default function HospitalJobListings() {
                 <ButtonUnstyled
                   style={{
                     cursor: "pointer",
-                    margin: 4,
-                    border: "0px",
+                    marginTop: 12,
                     borderRadius: 4,
                     paddingBlock: 6,
                     paddingInline: 8,
-                    background: "pink",
-                    color: "red",
+                    background: Colors.border,
+                    color: Colors.bluePrimary,
                     fontWeight: 600,
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",
+                    border: `1px solid ${Colors.bluePrimary}`,
                   }}
                   onClick={() => setCancelVisible(!cancelVisible)}
                 >
@@ -593,18 +578,23 @@ export default function HospitalJobListings() {
           </div>
           <ButtonUnstyled
             style={{
-              borderRadius: 4,
-              padding: 12,
-              fontSize: 14,
-              color: "#fff",
-              fontWeight: "600",
-              border: "0px",
-              background: "#00b0f0",
               cursor: "pointer",
+              margin: 6,
+              borderRadius: 4,
+              paddingBlock: 6,
+              paddingInline: 8,
+              background: Colors.border,
+              color: Colors.bluePrimary,
+              fontWeight: 600,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              border: `1px solid ${Colors.bluePrimary}`,
             }}
             onClick={() => navigate("addlisting")}
           >
-            Add Listing
+            Add Listing <FaPlusCircle style={{ marginLeft: 12 }} />
           </ButtonUnstyled>
         </div>
         {windowWidth < 800 ? (
@@ -925,8 +915,14 @@ export default function HospitalJobListings() {
                           paddingBlock: 4,
                           paddingInline: 12,
                           background:
-                            item.open === true ? "pink" : "lightgreen",
-                          color: "#fff",
+                            item.open === true
+                              ? Colors.blueMediumPrimary
+                              : Colors.blueBrightPrimary,
+                          color:
+                            item.open === true
+                              ? Colors.blueBrightPrimary
+                              : Colors.bluePrimary,
+
                           fontWeight: 600,
                           display: "flex",
                           flexDirection: "row",

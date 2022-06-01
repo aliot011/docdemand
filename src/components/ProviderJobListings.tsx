@@ -420,7 +420,7 @@ export default function JobListings() {
             display: "flex",
             flexDirection: "column",
             borderRadius: 20,
-            maxWidth: 520,
+            // maxWidth: 520,
           }}
         >
           <div
@@ -478,7 +478,7 @@ export default function JobListings() {
                   }}
                 >
                   <p style={{ fontSize: 16, fontWeight: 500 }}>
-                    ${modalData.rate}/hr
+                    ${modalData.rate * 8} (${modalData.rate}/hr)
                   </p>
                 </div>
                 <div
@@ -996,6 +996,7 @@ export default function JobListings() {
             return (
               <div
                 key={item.id}
+                className={"jobCard"}
                 style={{
                   padding: 8,
                   marginBottom: 16,
@@ -1190,13 +1191,13 @@ export default function JobListings() {
                 <ButtonUnstyled
                   style={{
                     cursor: "pointer",
-                    marginTop: 12,
-                    border: "0px",
+                    marginTop: 4,
                     borderRadius: 4,
                     paddingBlock: 4,
                     paddingLeft: 12,
-                    background: "#00b0f0",
-                    color: "#fff",
+                    border: `1px solid ${Colors.bluePrimary}`,
+                    background: Colors.border,
+                    color: Colors.bluePrimary,
                     fontWeight: 600,
                     display: "flex",
                     flexDirection: "row",
@@ -1204,15 +1205,31 @@ export default function JobListings() {
                     justifyContent: "space-between",
                     alignSelf: "flex-end",
                   }}
+                  onClick={() => {
+                    setModalData(item);
+                    setConfirmVisible(!confirmVisible);
+                  }}
                 >
-                  <p>CLAIM THIS JOB</p>
+                  <p>CLAIM JOB</p>
                   <MdChevronRight size={20} style={{ marginLeft: 8 }} />
                 </ButtonUnstyled>
               </div>
             );
           })
         ) : (
-          <table style={{ borderCollapse: "collapse" }}>
+          <table
+            style={{
+              borderCollapse: "collapse",
+              tableLayout: "fixed",
+              width: "100%",
+              marginBottom: 240,
+            }}
+          >
+            <col width="25%" />
+            <col width="25%" />
+            <col width="20%" />
+            <col width="15%" />
+            <col width="15%" />
             <thead style={{ marginBottom: 8 }}>
               <tr
                 style={{
@@ -1243,21 +1260,10 @@ export default function JobListings() {
                 </th>
                 <th>
                   <ButtonUnstyled style={filterButtonStyle}>
-                    <p>Posted</p> <FaSort style={{ marginLeft: 4 }} />
-                  </ButtonUnstyled>
-                </th>
-
-                <th>
-                  <ButtonUnstyled style={filterButtonStyle}>
                     <p>Compensation</p> <FaSort style={{ marginLeft: 4 }} />
                   </ButtonUnstyled>
                 </th>
-                <th
-                  style={{
-                    borderTopRightRadius: 8,
-                    borderBottomRightRadius: 8,
-                  }}
-                >
+                <th>
                   <ButtonUnstyled style={filterButtonStyle}>
                     <p>Job Type</p> <FaSort style={{ marginLeft: 4 }} />
                   </ButtonUnstyled>
@@ -1309,15 +1315,6 @@ export default function JobListings() {
                       })}
                     </td>
                     <td>
-                      {new Date(item.created).toLocaleDateString([], {
-                        month: "numeric",
-                        day: "numeric",
-                        year: "numeric",
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                    </td>
-                    <td>
                       <b>${item.rate * 8}</b>
                       <br />
                       (${item.rate}/hour)
@@ -1332,16 +1329,18 @@ export default function JobListings() {
                       <ButtonUnstyled
                         style={{
                           cursor: "pointer",
-                          border: "0px",
-                          borderRadius: 30,
-                          paddingBlock: 4,
-                          paddingLeft: 12,
-                          background: "#00b0f0",
-                          color: "#fff",
+                          margin: 6,
+                          borderRadius: 4,
+                          paddingBlock: 6,
+                          paddingInline: 8,
+                          background: Colors.border,
+                          color: Colors.bluePrimary,
                           fontWeight: 600,
                           display: "flex",
                           flexDirection: "row",
                           alignItems: "center",
+                          justifyContent: "space-between",
+                          border: `1px solid ${Colors.bluePrimary}`,
                         }}
                         onClick={() => {
                           setModalData(item);

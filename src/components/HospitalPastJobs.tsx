@@ -3,7 +3,7 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "../contexts/GlobalStateContext";
-import type { User } from "../types";
+import type { Account } from "../types";
 import { MdChevronRight, MdEvent, MdSchedule } from "react-icons/md";
 import axios from "axios";
 import { FaSort } from "react-icons/fa";
@@ -66,7 +66,7 @@ export default function HospitalPastJobs() {
     },
   ]);
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Account>();
 
   const [emailAlerts, setEmailAlerts] = useState<boolean>(false);
   const [textAlerts, setTextAlerts] = useState<boolean>(false);

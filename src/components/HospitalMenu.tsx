@@ -3,7 +3,7 @@ import { MdEventNote, MdWorkspaces } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../Colors";
 import "../App.css";
-import { FaStethoscope } from "react-icons/fa";
+import { FaBuilding, FaRegBuilding, FaRegUserCircle } from "react-icons/fa";
 
 export default function ProviderMenu() {
   return (
@@ -16,13 +16,6 @@ export default function ProviderMenu() {
           zIndex: 1,
         }}
       >
-        {/* <div
-          style={{
-            height: 2,
-            background: "#EFEFF4",
-            marginBottom: 20,
-          }}
-        /> */}
         <div
           style={{
             display: "flex",
@@ -43,8 +36,12 @@ export default function ProviderMenu() {
             flexDirection: "column",
           }}
         >
-          <MenuHeader label="Credentialing Concierge" />
-          <MenuLink title={"Coming Soon"} icon={<FaStethoscope />} />
+          <MenuHeader label="Facility Management" />
+          <MenuLink
+            title={"Facility List"}
+            icon={<FaRegBuilding />}
+            link="locations"
+          />
         </div>
       </div>
     </>
@@ -86,7 +83,7 @@ function MenuLink(props: { title: string; link?: string; icon: any }) {
         padding: 12,
         marginBlock: 8,
         background:
-          path === `/hospital/${props.link}`
+          path === `/facility/${props.link}`
             ? `${Colors.blueBrightPrimary}`
             : "transparent",
         fontWeight: 400,
@@ -97,7 +94,7 @@ function MenuLink(props: { title: string; link?: string; icon: any }) {
         color:
           props.link === undefined
             ? "rgba(102, 112, 133, 0.4)"
-            : path === `/hospital/${props.link}`
+            : path === `/facility/${props.link}`
             ? `${Colors.bluePrimary}`
             : "#667085",
         fontSize: 16,
