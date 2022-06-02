@@ -1,4 +1,4 @@
-import { Grid, Link, Modal } from "@mui/material";
+import { Grid, Link, Modal, Slide, Slider, SliderInput } from "@mui/material";
 import { useState } from "react";
 import { MdArrowBack, MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -180,14 +180,22 @@ export default function AddListing() {
         </div>
         <div style={{ height: 1, background: "#eaeaea", margin: 16 }} />
         <form style={{ margin: 12, display: "flex", flexDirection: "column" }}>
+          <DetailContainer label="Description">
+            <label>
+              <textarea
+                rows={4}
+                style={{
+                  border: "none",
+                  background: "#eaeaea",
+                  padding: 8,
+                  fontSize: 16,
+                  borderRadius: 8,
+                  marginBlock: 4,
+                }}
+              />
+            </label>
+          </DetailContainer>{" "}
           <DetailContainer label="Job Details">
-            {/* <label>
-              Location
-              <select>
-                <option value="Daily">Shift (one-time)</option>
-                <option value="Daily">Extended Job (multiple shifts)</option>
-              </select>
-            </label> */}
             <label>
               Location
               <input type={"text"} />
@@ -199,10 +207,6 @@ export default function AddListing() {
             <label>
               End Time
               <input type={"datetime-local"} />
-            </label>
-            <label>
-              Hourly Rate
-              <input type={"text"} />
             </label>
           </DetailContainer>
           <DetailContainer label="Provider Type">
@@ -256,18 +260,13 @@ export default function AddListing() {
               );
             })}
           </DetailContainer>
-          <DetailContainer label="Description">
-            <textarea
-              rows={4}
-              style={{
-                border: "none",
-                background: "#eaeaea",
-                padding: 8,
-                fontSize: 16,
-                borderRadius: 8,
-                marginBlock: 4,
-              }}
-            />
+          <DetailContainer label="Hourly Rate">
+            <div style={{ display: "flex" }}>
+              <label style={{ flex: 1 }}>
+                MD / DO
+                <Slider />
+              </label>
+            </div>
           </DetailContainer>
           <div
             style={{
